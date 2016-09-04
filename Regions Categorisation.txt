@@ -1,0 +1,44 @@
+'AdriaticSea,', 'Algarve,', 'Allgaeu,', 'Alps,', 'Atlantic,', 'Attica,', 'Balaton,', 'BalticSea,', 'Bavaria,', 'Belgium,', 'BlackForest,', 'Bornholm,', 'Brittany,', 'Bulgaria,', 'Cairo,', 'Carinthia,', 'Chalkidiki,', 'Corfu,', 'Corsica,', 'CostaBlanca,', 'CostaBrava,', 'CotedAzur,', 'Crete,', 'Czechia,', 'Denmark,', 'Egypt,', 'England,', 'ErzGebirge,', 'Fano,', 'France,', 'Fuerteventura,', 'GiantMountains,', 'GranCanaria,', 'Harz,', 'Holland,', 'Ibiza,', 'Ireland,', 'LakeGarda,', 'Lolland,', 'Madeira,', 'Mallorca,', 'Malta,', 'Normandy,', 'NorthSea,', 'Poland,', 'Rhodes,', 'Riviera,', 'SalzbergerLand,', 'Scotland,', 'Slowakei,', 'Styria,', 'Sweden,', 'Teneriffe,', 'Thuringia,', 'Tunisia,', 'TurkishAegeanSea,', 'TurkishRiviera,', 'Tyrol,', 'Wales,']
+
+Coordinates:
+coordinate_dict = {'Egypt': [26.820553, 30.802498], 'Cairo': [30.044420, 31.235712],
+					'Belgium': [50.503887, 4.469936], 'Bulgaria': [42.733883, 25.485830],
+					'Bornholm': [55.160428, 14.866884], 'Fano': [43.839816, 13.019420],
+					'Lolland': [54.727543, 11.464930], 'Allgaeu': [46.842863, 14.843783],
+					'Alps': [45.833611, 6.865], 'Bavaria': [48.790447, 11.497889],
+					'ErzGebirge': [50.580000, 13.000000], 'Harz': [51.809525, 10.238361],
+					'NorthSea': [56.511018, 3.515625], 'BalticSea': [58.487952, 19.863281],
+					'BlackForest': [39.013048, -104.700808], 'Thuringia': [51.010989, 10.845346],
+					'Atlantic': [14.5994, 28.6731], 'CotedAzur': [33.244490, -97.895646],
+					'Corsica': [42.039604, 9.012893], 'Normandy': [38.720884, -90.297336],
+					'Brittany': [48.202047, -2.932644], 'Attica': [38.08333, 23.5],
+					'Chalkidiki': [40.369500, 23.287085], 'Corfu': [39.624984, 19.922346],
+					'Crete': [35.240117, 24.809269], 'Rhodes': [36.434963, 28.217483],
+					'England': [52.355518, -1.174320], 'Ireland': [53.412910, -8.243890],
+					'Scotland': [56.490671, -4.202646], 'Wales': [52.130661, -3.783712],
+					'Holland': [52.132633, 5.291266], 'AdriaticSea': [41.855090, 17.290284],
+					'LakeGarda': [45.604939, 10.635141], 'Riviera': [27.298649, -97.814888],
+					'Tyrol': [47.253741, 11.601487], 'Malta': [35.937496, 14.375416],
+					'Carinthia': [46.722203, 14.180588], 'SalzbergerLand': [47.372607, 13.016474],
+					'Styria': [47.359344, 14.469983], 'Algarve': [37.017954, -7.930834],
+					'Madeira': [32.760707, -16.959472], 'Sweden': [60.128161, 18.643501],
+					'CostaBlanca': [38.504384, -0.264345], 'CostaBrava': [-12.045785, -77.135707],
+					'Fuerteventura':[28.358744, -14.053676], 'GranCanaria': [27.920220, -15.547437],
+					'Ibiza': [38.906734, 1.420598], 'Mallorca': [39.695263, 3.017571],
+					'Teneriffe': [-27.456388, 153.048609], 'GiantMountains': [50.767222, 15.622222],
+					'TurkishAegeanSea': [40.694726, 29.872522], 'TurkishRiviera': [36.675, 31.630278],
+					'Tunisia': [33.886917, 9.537499], 'Balaton': [46.830268, 17.734044], 
+					'Denmark': [56.263920, 9.501785], 'Poland': [51.919438, 19.145136],
+					'Slowakei': [48.669026, 19.699024], 'Czechia': [49.817492, 15.472962],
+					'France': [46.227638, 2.213749]}
+
+Categories: City, Coast, Country, Island, Lake, Mountains, Sea, 
+
+AdriaticSea - Coast
+Algarve - Portugal, City, Coast
+Allgaeu - Germany, Mountains, Country,
+Alps - Mountains
+Atlantic - Sea
+Attica - Greece, City, Coast
+Balaton - Hungary, Lake
+BalticSea - Sea
