@@ -1,11 +1,124 @@
 import xlrd
 from Case import Case
+from tkinter import *
+from tkinter import ttk
 """
 CBR Travel Case
 Author: William Hsu
 19/August/2016
 """
+
+
+class Application(Frame):
+	"""A Gui application with three buttons"""
+	def __init__(self, master):
+		"""Initialize the Frame"""
+		Frame.__init__(self, master)
+		self.grid()
+		self.create_widgets()
+	def create_widgets(self):
 		
+		self.Title = Label(self, text = "CBR for Travel Case Base", font =('Helvetica', 24))
+		self.Title.grid(row = 0, column = 0, sticky = W)
+		
+		self.Instruction_Label = Label(self, text= "some instruction on how to use the application")
+		self.Instruction_Label.grid(row = 1, column = 0, sticky = E)
+		self.Weights_Label = Label(self, text = "weighting").grid(row = 2, column = 2, sticky = W)
+		
+		self.Holiday_Type = Label(self, text ="Holiday Type").grid(row = 3, column = 0, sticky = E)
+		Holiday_Types = ('Arbitrary', 'Active', 'Adventure', 'Bathing', 'City', 'Diving', 'Education', 
+						'Language', 'Recreation', 'Skiing', 'Shopping', 'Surfing', 'Wandering') 
+		self.Holiday_Type_cb = ttk.Combobox(self, values = Holiday_Types, state= "normal")
+		self.Holiday_Type_cb.grid(row = 3, column = 1, sticky = W)
+		Weights = ("0","1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+		self.Holiday_Type_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Holiday_Type_Weight_cb.grid(row=3, column = 2, sticky = W)
+		
+		self.Price = Label(self, text="Price").grid(row = 4, column = 0, sticky = E)
+		self.Price_Entry = Entry(self, bd= 2)
+		self.Price_Entry.grid(row=4, column = 1, sticky = W)
+		self.Price_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Price_Weight_cb.grid(row=4, column = 2, sticky = W)
+		
+		self.Number_Of_Persons = Label(self, text ="Number of Persons").grid(row = 5, column = 0, sticky = E)
+		self.Number_Of_Persons_Entry = Entry(self, bd= 2)
+		self.Number_Of_Persons_Entry.grid(row=5, column = 1, sticky = W)
+		self.Number_Of_Persons_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Number_Of_Persons_Weight_cb.grid(row=5, column = 2, sticky = W)
+		
+		self.Region = Label(self, text="Region").grid(row = 6, column= 0, sticky = E)
+		Region = 	("Arbitrary", "AdriaticSea", "Algarve", "Allgaeu", "Alps", "Atlantic",
+		 			"Attica", "Austria", "Balaton", "BalticSea", "Bavaria", "Belgium", 
+					"BlackForest", "Bornholm", "Brittany", "Bulgaria", "Cairo", "Carinthia",
+					"Chalkidiki", "City", "Coast", "Corfu", "Corsica", "CostaBlanca", "CostaBrava",
+					"CotedAzur", "Country", "Crete", "Cyprus", "Czechia", "Denmark", "Dolomites",
+					"Egypt", "England", "ErzGebirge", "Fano", "France", "Fuerteventura", 
+					"Germany", "GiantMountains", "GranCanaria", "Greece", "Harz", "HighTatra", 
+					"Holland", "Hungaria", "Ibiza", "Ireland", "Island", "Italy", "Lake", 
+					"LakeGarda", "Lanzarote", "Lolland", "London", "LowerAustria", "Madeira",
+					"Mallorca", "Malta", "MediterraneanSea", "Morocco", "Mountains", "Normandy", 
+					"NorthSea", "Paris", "Poland", "Portugal", "Rhodes", "Riviera", "SalzbergerLand",
+					"Salzkammergut", "Scotland", "Sea", "Slowakei", "Spain", "Sweden", "Switzerland",
+					"Styria", "Teneriffe", "Thuringia", "Tunisia", "Turkey", "TurkishAegeanSea", 
+					"TurkishRiviera", "Tyrol", "UnitedKingdom", "Wales", "Waters")
+		self.Region_cb = ttk.Combobox(self, values = Region, state= "normal")
+		self.Region_cb.grid(row = 6, column = 1, sticky = W)
+		self.Region_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Region_Weight_cb.grid(row=6, column = 2, sticky = W)
+		
+		self.Transportation = Label(self, text="Transportation").grid(row = 7, column= 0, sticky = E)
+		Transportation= ("Arbitrary", "Car",  "Coach", "Plane", "Train")
+		self.Transportation_cb = ttk.Combobox(self, values = Transportation, state= "normal")
+		self.Transportation_cb.grid(row = 7, column = 1, sticky = W)
+		self.Transportation_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Transportation_Weight_cb.grid(row=7, column = 2, sticky = W)
+		
+		self.Duration = Label(self, text ="Duration").grid(row = 8, column = 0, sticky = E)
+		self.Duration_Entry = Entry(self, bd= 2)
+		self.Duration_Entry.grid(row= 8, column = 1, sticky = W)
+		self.Duration_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Duration_Weight_cb.grid(row=8, column = 2, sticky = W)
+		
+		self.Season = Label(self, text="Season").grid(row = 9, column = 0, sticky = E)
+		Season =	("Arbitrary", "Spring", "Summer", "Autumn", "Winter", "January", "February", "March", 
+					"April", "May", "June", "July", "August", "September", "October", "November", "December")
+		self.Season_cb = ttk.Combobox(self, values = Transportation, state = "normal")
+		self.Season_cb.grid(row = 9, column = 1, sticky = W)
+		self.Season_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Season_Weight_cb.grid(row=9, column = 2, sticky = W)
+		
+		self.Accommodation_Type = Label(self, text="Accommodation Type").grid(row = 10, column = 0, sticky = E)
+		Accommodation_Type =	("Arbitrary", "HolidayFlat", "OneStar", "TwoStars", "ThreeStars", 
+								"FourStars", "FiveStars")
+		self.Accommodation_Type_cb = ttk.Combobox(self, values = Accommodation_Type, state = "normal")
+		self.Accommodation_Type_cb.grid(row = 10, column = 1, sticky = W)
+		self.Accommodation_Type_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Accommodation_Type_Weight_cb.grid(row = 10, column = 2, sticky = W)
+		
+		self.Hotel = Label(self, text ="Hotel").grid(row = 11, column = 0, sticky = E)
+		self.Hotel_Entry = Entry(self, bd= 2)
+		self.Hotel_Entry.grid(row = 11 , column = 1, sticky = W)
+		self.Hotel_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		self.Hotel_Weight_cb.grid(row = 11, column = 2, sticky = W)
+		
+		self.k = Label(self, text ="k").grid(row = 12, column = 0, sticky = E)
+		self.k_Entry = Entry(self, bd = 2).grid(row = 12, column = 1, sticky = W)
+		
+		self.submit_button = Button(self, text = "Submit", command = self.reveal).grid(row = 13, column = 2, sticky = E)
+		self.text = Text(self, width = 35, height = 11, wrap = WORD)
+		self.text.grid(row = 14, column = 1, columnspan = 2, sticky = W)
+	def reveal(self):
+		cases_output = 	"Holiday Type: " + self.Holiday_Type_cb.get() + "\n" +\
+						"Price: " + self.Price_Entry.get()  
+		x = 'a string'
+		print("this is x ") 
+		print(type(x))
+		print("this is combobox variable")
+		print(type(str(self.Holiday_Type_cb.get())))				
+		self.text.delete(0.0, END)
+		self.text.insert(0.0, cases[0].holiday_type)
+		
+#read in cases from case base
 cases = []
 def read_in_cases():
 	#workbook = xlrd.open_workbook('CASE/Test_Workbook.xlsx')
@@ -42,40 +155,14 @@ def read_in_cases():
 		
 if __name__ == '__main__':
 	cases = read_in_cases()
-	#coordinates sourced from http://www.latlong.net/
-	#For TurkishAegeanSea the search term Ege Denizi was used
-	#For TurkishRiviera the coordinates were found through wikipedia.org
-	#For Alps the coordinates were found through wikipedia.org
-	coordinate_dict = {'Egypt': [26.820553, 30.802498], 'Cairo': [30.044420, 31.235712],
-						'Belgium': [50.503887, 4.469936], 'Bulgaria': [42.733883, 25.485830],
-						'Bornholm': [55.160428, 14.866884], 'Fano': [43.839816, 13.019420],
-						'Lolland': [54.727543, 11.464930], 'Allgaeu': [46.842863, 14.843783],
-						'Alps': [33.148179, -84.603261], 'Bavaria': [48.790447, 11.497889],
-						'ErzGebirge': [50.580000, 13.000000], 'Harz': [51.809525, 10.238361],
-						'NorthSea': [56.511018, 3.515625], 'BalticSea': [58.487952, 19.863281],
-						'BlackForest': [39.013048, -104.700808], 'Thuringia': [51.010989, 10.845346],
-						'Atlantic': [41.403601, -95.013878], 'CotedAzur': [33.244490, -97.895646],
-						'Corsica': [42.039604, 9.012893], 'Normandy': [38.720884, -90.297336],
-						'Brittany': [48.202047, -2.932644], 'Attica': [40.294204, -87.248899],
-						'Chalkidiki': [40.369500, 23.287085], 'Corfu': [39.624984, 19.922346],
-						'Crete': [35.240117, 24.809269], 'Rhodes': [36.434963, 28.217483],
-						'England': [52.355518, -1.174320], 'Ireland': [53.412910, -8.243890],
-						'Scotland': [56.490671, -4.202646], 'Wales': [52.130661, -3.783712],
-						'Holland': [52.132633, 5.291266], 'AdriaticSea': [41.855090, 17.290284],
-						'LakeGarda': [45.604939, 10.635141], 'Riviera': [27.298649, -97.814888],
-						'Tyrol': [47.253741, 11.601487], 'Malta': [35.937496, 14.375416],
-						'Carinthia': [46.722203, 14.180588], 'SalzbergerLand': [47.372607, 13.016474],
-						'Styria': [47.359344, 14.469983], 'Algarve': [37.017954, -7.930834],
-						'Madeira': [32.760707, -16.959472], 'Sweden': [60.128161, 18.643501],
-						'CostaBlanca': [38.504384, -0.264345], 'CostaBrava': [-12.045785, -77.135707],
-						'Fuerteventura':[28.358744, -14.053676], 'GranCanaria': [27.920220, -15.547437],
-						'Ibiza': [38.906734, 1.420598], 'Mallorca': [39.695263, 3.017571],
-						'Teneriffe': [-27.456388, 153.048609], 'GiantMountains': [50.767222, 15.622222],
-						'TurkishAegeanSea': [40.694726, 29.872522], 'TurkishRiviera': [36.675, 31.630278],
-						'Tunisia': [33.886917, 9.537499], 'Balaton': [46.830268, 17.734044], 
-						'Denmark': [56.263920, 9.501785], 'Poland': [51.919438, 19.145136],
-						'Slowakei': [48.669026, 19.699024], 'Czechia': [49.817492, 15.472962],
-						'France': [46.227638, 2.213749]}
+	#create UI window
+	root = Tk()
+	root.title("CBR Travel Case")
+	root.geometry("600x600")
+	app = Application(root)
+	app.grid()
+	root.mainloop()
+
 	#for categorical data find the range and value of entries
 	holiday_type_list = []
 	region_list = []
@@ -83,12 +170,11 @@ if __name__ == '__main__':
 	season_list = []
 	accommodation_list = []
 	hotel_list = []
-	
 	price_list = []
 	number_of_persons_list = []
 	duration_list = []
-	#parse cases to see the range of fields
 	
+	#parse cases to see the range of fields
 	for case in cases:
 		#categorical variables
 		if case.holiday_type not in holiday_type_list:
@@ -130,21 +216,6 @@ if __name__ == '__main__':
 		accommodation_list)
 	print('There are ' + str(len(hotel_list)) + 'different hotels: ', hotel_list)
 
-	
-	
-#	target_holiday_type = input('Holiday Type: ')
-#	target_price = input('Price:' )
-#	target_number_of_persons = input('Number of Persons: ')
-#	target_region = input('Region :')
-#	target_transportation = input('Transportation: ')
-#	target_duration = input('Duration: ')
-#	target_season = input('Season: ')
-#	target_accommodation = input('Accommodation: ')
-#	target_hotel = input('Hotel: ')
-#	target_case = case(None, None, target_holiday_type, target_price, 
-#					target_number_of_persons, target_region, target_transportation, 
-#					target_duration, target_season, target_accommodation, target_hotel)
-#	similarity_calculation(target_case, cases)
 				
 				
 				
