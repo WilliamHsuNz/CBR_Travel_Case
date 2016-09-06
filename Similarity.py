@@ -14,7 +14,7 @@ def holiday_type(query_case, source_case):
 							[0.5, 0.9, 0.1, 0.5, 1.0, 0.6, 0.9],
 							[1.0, 0.3, 0.2, 0.0, 0.6, 1.0, 0.3],
 							[0.7, 0.2, 0.1, 0.2, 0.9, 0.3, 1.0]]
-	similarity = holiday_type_matrix[holiday_type_dict[query_case.holiday_type]][holidaty_type_dict[source_case.holiday_type]]
+	similarity = holiday_type_matrix[holiday_type_dict[query_case.holiday_type]][holiday_type_dict[source_case.holiday_type]]
 	return similarity
 	
 def season(query_case, source_case):
@@ -24,7 +24,7 @@ def season(query_case, source_case):
 	query_seaon = season_dict[query_case.season]
 	source_season = season_dict[source_case.season]
 	difference = abs(query_season - source_season) 
-	if difference > 6
+	if difference > 6:
 		min_season = min(query_season, source_season)
 		max_season = max(query_season, source_season)
 		difference = abs(max_season - (min_season + 12))
@@ -33,4 +33,3 @@ def season(query_case, source_case):
 		similarity = 0.0
 	return similarity
 	
-def 

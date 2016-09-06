@@ -2,6 +2,7 @@ import xlrd
 from Case import Case
 from tkinter import *
 from tkinter import ttk
+import Similarity
 """
 CBR Travel Case
 Author: William Hsu
@@ -41,8 +42,9 @@ class Application(Frame):
 		self.Price_Weight_cb.grid(row=4, column = 2, sticky = W)
 		
 		self.Number_Of_Persons = Label(self, text ="Number of Persons").grid(row = 5, column = 0, sticky = E)
-		self.Number_Of_Persons_Entry = Entry(self, bd= 2)
-		self.Number_Of_Persons_Entry.grid(row=5, column = 1, sticky = W)
+		Number_Of_Persons = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
+		self.Number_Of_Persons_cb = ttk.Combobox(self, values = Number_Of_Persons, state = "Normal")
+		self.Number_Of_Persons_cb.grid(row=5, column = 1, sticky = W)
 		self.Number_Of_Persons_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Number_Of_Persons_Weight_cb.grid(row=5, column = 2, sticky = W)
 		
@@ -74,15 +76,17 @@ class Application(Frame):
 		self.Transportation_Weight_cb.grid(row=7, column = 2, sticky = W)
 		
 		self.Duration = Label(self, text ="Duration").grid(row = 8, column = 0, sticky = E)
-		self.Duration_Entry = Entry(self, bd= 2)
-		self.Duration_Entry.grid(row= 8, column = 1, sticky = W)
+		Duration = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,
+					31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56)
+		self.Duration_cb = ttk.Combobox(self, values = Duration, state = "normal")
+		self.Duration_cb.grid(row= 8, column = 1, sticky = W)
 		self.Duration_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Duration_Weight_cb.grid(row=8, column = 2, sticky = W)
 		
 		self.Season = Label(self, text="Season").grid(row = 9, column = 0, sticky = E)
 		Season =	("Arbitrary", "Spring", "Summer", "Autumn", "Winter", "January", "February", "March", 
 					"April", "May", "June", "July", "August", "September", "October", "November", "December")
-		self.Season_cb = ttk.Combobox(self, values = Transportation, state = "normal")
+		self.Season_cb = ttk.Combobox(self, values = Season, state = "normal")
 		self.Season_cb.grid(row = 9, column = 1, sticky = W)
 		self.Season_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Season_Weight_cb.grid(row=9, column = 2, sticky = W)
@@ -102,12 +106,45 @@ class Application(Frame):
 		self.Hotel_Weight_cb.grid(row = 11, column = 2, sticky = W)
 		
 		self.k = Label(self, text ="k").grid(row = 12, column = 0, sticky = E)
-		self.k_Entry = Entry(self, bd = 2).grid(row = 12, column = 1, sticky = W)
+		self.k_Entry = Entry(self, bd = 2)
+		self.k_Entry.grid(row = 12, column = 1, sticky = W)
 		
 		self.submit_button = Button(self, text = "Submit", command = self.reveal).grid(row = 13, column = 2, sticky = E)
 		self.text = Text(self, width = 35, height = 11, wrap = WORD)
 		self.text.grid(row = 14, column = 1, columnspan = 2, sticky = W)
 	def reveal(self):
+		if len(self.Holiday_Type_cb.get()) == 0:
+			self.Holiday_Type_cb.set("Arbitrary")
+		if len(self.Price_Entry.get()) == 0:
+			self.Price_Entry.insert(0, 10000)#maximum price
+		if len(self.Number_Of_Persons_cb.get()) == 0:
+			self.Number_Of_Persons_cb.set(1)#minimum number of people
+		if len(self.Region_cb.get()) == 0:
+			self.Region_cb.set("Arbitrary")
+		if len(self.Transportation_cb.get()) == 0:
+			self.Transportation_cb.set("Arbitrary")
+		if len(self.Duration_cb.get()) == 0:
+			self.Duration_cb.set(1)
+		if len(self.Season_cb.get()) == 0:
+			self.Season_cb.set("Arbitrary")
+		if len(self.Accommodation_Type_cb.get()) == 0:
+			self.Accommodation_Type_cb.set("Arbitrary")
+		if len(self.Hotel_Entry.get()) == 0:
+			self.Hotel_Entry.insert(0, "Arbitrary")
+		if len(self.k_Entry.get()) == 0:
+			self.k_Entry.insert(0,1)#set(1)	
+
+		print(self.Holiday_Type_cb.get() + "\n" + self.Price_Entry.get() + "\n" + self.Number_Of_Persons_cb.get() + "\n" +\
+				self.Region_cb.get() + "\n" + self.Transportation_cb.get() + "\n" + self.Duration_cb.get() + "\n" + \
+				self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n" + self.Hotel_Entry.get() + "\n" + \
+				self.k_Entry.get())
+		query_case = 	Case('Query Journey', '0', self.Holiday_Type_cb.get(), self.Price_Entry.get(), 
+						self.Number_Of_Persons_cb.get(), self.Region_cb.get(), self.Transportation_cb.get(),
+						self.Duration_cb.get(), self.Season_cb.get(), self.Accommodation_Type_cb.get(),
+						self.Hotel_Entry.get())
+		#holiday_type_similarity = Similarity.holiday_type(query_case, cases[0])	
+		print("Holiday Type Similarity")
+		#print(holiday_type_similarity)			
 		cases_output = 	"Holiday Type: " + self.Holiday_Type_cb.get() + "\n" +\
 						"Price: " + self.Price_Entry.get()  
 		x = 'a string'
@@ -131,26 +168,20 @@ def read_in_cases():
 		if sheet.cell(row_index, 1).value == 'case':
 			case = sheet.cell(row_index, 2).value
 			journey_code = sheet.cell(row_index + 1, 2).value
-			holiday_type = sheet.cell(row_index + 2, 2).value
+			holiday_type = sheet.cell(row_index + 2, 2).value[:-1]
 			price = sheet.cell(row_index + 3, 2).value
 			number_of_persons = sheet.cell(row_index + 4, 2).value
-			region = sheet.cell(row_index + 5, 2).value
-			transportation = sheet.cell(row_index + 6, 2).value
+			region = sheet.cell(row_index + 5, 2).value[:-1]
+			transportation = sheet.cell(row_index + 6, 2).value[:-1]
 			duration = sheet.cell(row_index + 7, 2).value
-			season = sheet.cell(row_index + 8, 2).value
-			accommodation = sheet.cell(row_index + 9, 2).value
+			season = sheet.cell(row_index + 8, 2).value[:-1]
+			accommodation = sheet.cell(row_index + 9, 2).value[:-1]
 			hotel = sheet.cell(row_index + 10, 2).value
-			#print(case, journey_code, holiday_type, price, number_of_persons, 
-			#	region,transportation, duration, season, accommodation, hotel)
 			cases.append(Case(case, journey_code, holiday_type, price, 
 							number_of_persons, region, transportation, 
 							duration, season, accommodation, hotel))
-			#print(x.case, x.journey_code, x.holiday_type, x.price, x.number_of_persons, 
-			#	x.region, x.transportation, x.duration, x.season, x.accommodation, x.hotel)
 	print(len(cases))
 	return cases
-#def similarity_calculation(target_case, cases):
-	#for case in cases:
 			
 		
 if __name__ == '__main__':
