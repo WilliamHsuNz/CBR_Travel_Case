@@ -3,6 +3,7 @@ from Case import Case
 from tkinter import *
 from tkinter import ttk
 import Similarity
+import math
 """
 CBR Travel Case
 Author: William Hsu
@@ -113,6 +114,7 @@ class Application(Frame):
 		self.text = Text(self, width = 35, height = 11, wrap = WORD)
 		self.text.grid(row = 14, column = 1, columnspan = 2, sticky = W)
 	def reveal(self):
+		#handling blank entries
 		if len(self.Holiday_Type_cb.get()) == 0:
 			self.Holiday_Type_cb.set("Arbitrary")
 		if len(self.Price_Entry.get()) == 0:
@@ -132,7 +134,7 @@ class Application(Frame):
 		if len(self.Hotel_Entry.get()) == 0:
 			self.Hotel_Entry.insert(0, "Arbitrary")
 		if len(self.k_Entry.get()) == 0:
-			self.k_Entry.insert(0,1)#set(1)	
+			self.k_Entry.insert(0,1)	
 
 		print(self.Holiday_Type_cb.get() + "\n" + self.Price_Entry.get() + "\n" + self.Number_Of_Persons_cb.get() + "\n" +\
 				self.Region_cb.get() + "\n" + self.Transportation_cb.get() + "\n" + self.Duration_cb.get() + "\n" + \
