@@ -3,7 +3,7 @@ from Case import Case
 from tkinter import *
 from tkinter import ttk
 import Similarity
-import math
+#import math
 """
 CBR Travel Case
 Author: William Hsu
@@ -139,29 +139,50 @@ class Application(Frame):
 
 		print(self.Holiday_Type_cb.get() + "\n" + self.Price_Entry.get() + "\n" + self.Number_Of_Persons_cb.get() + "\n" +\
 				self.Region_cb.get() + "\n" + self.Transportation_cb.get() + "\n" + self.Duration_cb.get() + "\n" + \
-				self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n"  + self.k_Entry.get())
+				self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n")
 		query_case = 	Case('Query Journey', '0', self.Holiday_Type_cb.get(), self.Price_Entry.get(), 
 						self.Number_Of_Persons_cb.get(), self.Region_cb.get(), self.Transportation_cb.get(),
 						self.Duration_cb.get(), self.Season_cb.get(), self.Accommodation_Type_cb.get(),
 						"Hotel")
+		output = ""
+		for x in cases:
+			holiday_type_similarity = Similarity.holiday_type(query_case, x)
+			price_similariy = Similarity.price(query_case, x)
+			number_of_persons_similarity = Similarity.number_of_persons(query_case, x)
+			region_similarity = Similarity.region(query_case, x)
+			transportation_similarity = Similarity.transportation(query_case, x)
+			duration_similarity = Similarity.duration(query_case, x)
+			season_similarity = Similarity.season(query_case, x)
+			accommodation_similarity = Similarity.accommodation(query_case, x)
+			output += "Similarity scores ****Test**** \n" + str(holiday_type_similarity) +"\n"+ \
+				 str(price_similariy) + "\n" + str(number_of_persons_similarity) + "\n" + \
+				 str(region_similarity) + "\n" + str(transportation_similarity) + "\n" + \
+				 str(duration_similarity) + "\n" + str(season_similarity) + "\n" + \
+				 str(accommodation_similarity) +"\n" 
+				
+		
+		
+		
+			
 		#holiday_type_similarity = Similarity.holiday_type(query_case, cases[0])	
-		print("Holiday Type Similarity")
+		#print("Holiday Type Similarity")
 		#print(holiday_type_similarity)			
-		cases_output = 	"Holiday Type: " + self.Holiday_Type_cb.get() + "\n" +\
-						"Price: " + self.Price_Entry.get()  
+		#cases_output = 	"Holiday Type: " + self.Holiday_Type_cb.get() + "\n" +\
+		#				"Price: " + self.Price_Entry.get()  
 		x = 'a string'
 		print("this is x ") 
 		print(type(x))
 		print("this is combobox variable")
 		print(type(str(self.Holiday_Type_cb.get())))				
 		self.text.delete(0.0, END)
-		self.text.insert(0.0, cases[0].holiday_type)
+		self.text.insert(0.0, output)
 		
 #read in cases from case base
 cases = []
 def read_in_cases():
+	workbook = xlrd.open_workbook('Case/Regions_Test.xlsx')
 	#workbook = xlrd.open_workbook('CASE/Test_Workbook.xlsx')
-	workbook = xlrd.open_workbook('CASE/TRAVEL.XLS')
+	#workbook = xlrd.open_workbook('CASE/TRAVEL.XLS')
 	print(workbook.nsheets)
 	sheet = workbook.sheet_by_index(0)
 	print(sheet.ncols)
