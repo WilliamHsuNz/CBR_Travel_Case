@@ -44,7 +44,7 @@ class Application(Frame):
 		
 		self.Number_Of_Persons = Label(self, text ="Number of Persons").grid(row = 5, column = 0, sticky = E)
 		Number_Of_Persons = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
-		self.Number_Of_Persons_cb = ttk.Combobox(self, values = Number_Of_Persons, state = "Normal")
+		self.Number_Of_Persons_cb = ttk.Combobox(self, values = Number_Of_Persons, state = "readonly")
 		self.Number_Of_Persons_cb.grid(row=5, column = 1, sticky = W)
 		self.Number_Of_Persons_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Number_Of_Persons_Weight_cb.grid(row=5, column = 2, sticky = W)
@@ -53,17 +53,17 @@ class Application(Frame):
 		Region = 	("Arbitrary", "AdriaticSea", "Algarve", "Allgaeu", "Alps", "Atlantic",
 		 			"Attica", "Austria", "Balaton", "BalticSea", "Bavaria", "Belgium", 
 					"BlackForest", "Bornholm", "Brittany", "Bulgaria", "Cairo", "Carinthia",
-					"Chalkidiki", "City", "Coast", "Corfu", "Corsica", "CostaBlanca", "CostaBrava",
-					"CotedAzur", "Country", "Crete", "Cyprus", "Czechia", "Denmark", "Dolomites",
-					"Egypt", "England", "ErzGebirge", "Fano", "France", "Fuerteventura", 
-					"Germany", "GiantMountains", "GranCanaria", "Greece", "Harz", "HighTatra", 
-					"Holland", "Hungaria", "Ibiza", "Ireland", "Island", "Italy", "Lake", 
-					"LakeGarda", "Lanzarote", "Lolland", "London", "LowerAustria", "Madeira",
-					"Mallorca", "Malta", "MediterraneanSea", "Morocco", "Mountains", "Normandy", 
-					"NorthSea", "Paris", "Poland", "Portugal", "Rhodes", "Riviera", "SalzbergerLand",
-					"Salzkammergut", "Scotland", "Sea", "Slowakei", "Spain", "Sweden", "Switzerland",
-					"Styria", "Teneriffe", "Thuringia", "Tunisia", "Turkey", "TurkishAegeanSea", 
-					"TurkishRiviera", "Tyrol", "UnitedKingdom", "Wales", "Waters")
+					"Chalkidiki", "Corfu", "Corsica", "CostaBlanca", "CostaBrava", "CotedAzur", 
+					"Crete", "Cyprus", "Czechia", "Denmark", "Dolomites","Egypt", "England", 
+					"ErzGebirge", "Fano", "France", "Fuerteventura", "Germany", 
+					"GiantMountains", "GranCanaria", "Greece", "Harz", "HighTatra", "Holland", 
+					"Hungaria", "Ibiza", "Ireland", "Italy", "LakeGarda", "Lanzarote", "Lolland", 
+					"London", "LowerAustria", "Madeira", "Mallorca", "Malta", "MediterraneanSea", 
+					"Morocco", "Normandy", "NorthSea", "Paris", "Poland", "Portugal", "Rhodes", 
+					"Riviera", "SalzbergerLand", "Salzkammergut", "Scotland", "Slowakei", "Spain", 
+					"Sweden", "Switzerland", "Styria", "Teneriffe", "Thuringia", "Tunisia", 
+					"Turkey", "TurkishAegeanSea", "TurkishRiviera", "Tyrol", "UnitedKingdom", 
+					"Wales")
 		self.Region_cb = ttk.Combobox(self, values = Region, state= "normal")
 		self.Region_cb.grid(row = 6, column = 1, sticky = W)
 		self.Region_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
@@ -79,7 +79,7 @@ class Application(Frame):
 		self.Duration = Label(self, text ="Duration").grid(row = 8, column = 0, sticky = E)
 		Duration = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,
 					31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56)
-		self.Duration_cb = ttk.Combobox(self, values = Duration, state = "normal")
+		self.Duration_cb = ttk.Combobox(self, values = Duration, state = "readonly")
 		self.Duration_cb.grid(row= 8, column = 1, sticky = W)
 		self.Duration_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Duration_Weight_cb.grid(row=8, column = 2, sticky = W)
@@ -87,7 +87,7 @@ class Application(Frame):
 		self.Season = Label(self, text="Season").grid(row = 9, column = 0, sticky = E)
 		Season =	("Arbitrary", "Spring", "Summer", "Autumn", "Winter", "January", "February", "March", 
 					"April", "May", "June", "July", "August", "September", "October", "November", "December")
-		self.Season_cb = ttk.Combobox(self, values = Season, state = "normal")
+		self.Season_cb = ttk.Combobox(self, values = Season, state = "readonly")
 		self.Season_cb.grid(row = 9, column = 1, sticky = W)
 		self.Season_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Season_Weight_cb.grid(row=9, column = 2, sticky = W)
@@ -95,21 +95,21 @@ class Application(Frame):
 		self.Accommodation_Type = Label(self, text="Accommodation Type").grid(row = 10, column = 0, sticky = E)
 		Accommodation_Type =	("Arbitrary", "HolidayFlat", "OneStar", "TwoStars", "ThreeStars", 
 								"FourStars", "FiveStars")
-		self.Accommodation_Type_cb = ttk.Combobox(self, values = Accommodation_Type, state = "normal")
+		self.Accommodation_Type_cb = ttk.Combobox(self, values = Accommodation_Type, state = "readonly")
 		self.Accommodation_Type_cb.grid(row = 10, column = 1, sticky = W)
 		self.Accommodation_Type_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Accommodation_Type_Weight_cb.grid(row = 10, column = 2, sticky = W)
+	
+		#self.Hotel = Label(self, text ="Hotel").grid(row = 11, column = 0, sticky = E)
+		#self.Hotel_Entry = Entry(self, bd= 2)
+		#self.Hotel_Entry.grid(row = 11 , column = 1, sticky = W)
+		#self.Hotel_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
+		#self.Hotel_Weight_cb.grid(row = 11, column = 2, sticky = W)
 		
-		self.Hotel = Label(self, text ="Hotel").grid(row = 11, column = 0, sticky = E)
-		self.Hotel_Entry = Entry(self, bd= 2)
-		self.Hotel_Entry.grid(row = 11 , column = 1, sticky = W)
-		self.Hotel_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
-		self.Hotel_Weight_cb.grid(row = 11, column = 2, sticky = W)
-		
-		self.k = Label(self, text ="k").grid(row = 12, column = 0, sticky = E)
-		self.k_Entry = Entry(self, bd = 2)
-		self.k_Entry.grid(row = 12, column = 1, sticky = W)
-		
+		#self.k = Label(self, text ="k").grid(row = 12, column = 0, sticky = E)
+		#self.k_Entry = Entry(self, bd = 2)
+		#self.k_Entry.grid(row = 12, column = 1, sticky = W)
+	
 		self.submit_button = Button(self, text = "Submit", command = self.reveal).grid(row = 13, column = 2, sticky = E)
 		self.text = Text(self, width = 35, height = 11, wrap = WORD)
 		self.text.grid(row = 14, column = 1, columnspan = 2, sticky = W)
@@ -131,19 +131,19 @@ class Application(Frame):
 			self.Season_cb.set("Arbitrary")
 		if len(self.Accommodation_Type_cb.get()) == 0:
 			self.Accommodation_Type_cb.set("Arbitrary")
-		if len(self.Hotel_Entry.get()) == 0:
-			self.Hotel_Entry.insert(0, "Arbitrary")
-		if len(self.k_Entry.get()) == 0:
-			self.k_Entry.insert(0,1)	
+
+		#if len(self.Hotel_Entry.get()) == 0:
+		#	self.Hotel_Entry.insert(0, "Arbitrary")
+		#if len(self.k_Entry.get()) == 0:
+		#	self.k_Entry.insert(0,1)	
 
 		print(self.Holiday_Type_cb.get() + "\n" + self.Price_Entry.get() + "\n" + self.Number_Of_Persons_cb.get() + "\n" +\
 				self.Region_cb.get() + "\n" + self.Transportation_cb.get() + "\n" + self.Duration_cb.get() + "\n" + \
-				self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n" + self.Hotel_Entry.get() + "\n" + \
-				self.k_Entry.get())
+				self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n"  + self.k_Entry.get())
 		query_case = 	Case('Query Journey', '0', self.Holiday_Type_cb.get(), self.Price_Entry.get(), 
 						self.Number_Of_Persons_cb.get(), self.Region_cb.get(), self.Transportation_cb.get(),
 						self.Duration_cb.get(), self.Season_cb.get(), self.Accommodation_Type_cb.get(),
-						self.Hotel_Entry.get())
+						"Hotel")
 		#holiday_type_similarity = Similarity.holiday_type(query_case, cases[0])	
 		print("Holiday Type Similarity")
 		#print(holiday_type_similarity)			
