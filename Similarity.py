@@ -6,17 +6,32 @@ Author: William Hsu
 """
 
 def holiday_type(query_case, source_case):
-	holiday_type_dict = {'Active': 0, 'Bathing': 1, 'Education': 2, 'Language': 3,
-	 					'Recreation': 4, 'Skiing': 5, 'Wandering': 6}
-	query_case_holiday_type = holiday_type_dict[query_case.holiday_type]
-	source_case_holiday_type = holiday_type_dict[source_case.holiday_type]
-	holiday_type_matrix =  [[1.0, 0.5, 0.0, 0.0, 0.5, 1.0, 0.7],
-							[0.5, 1.0, 0.0, 0.0, 0.9, 0.3, 0.6],
-							[0.0, 0.0, 1.0, 0.8, 0.1, 0.2, 0.1],
-							[0.0, 0.0, 1.0, 1.0, 0.5, 0.0, 0.0],
-							[0.5, 0.9, 0.1, 0.5, 1.0, 0.6, 0.9],
-							[1.0, 0.3, 0.2, 0.0, 0.6, 1.0, 0.3],
-							[0.7, 0.2, 0.1, 0.2, 0.9, 0.3, 1.0]]
+	type_list = ['Arbitrary', 'Active', 'Adventure', 'Bathing', 'City', 'Diving', 
+				'Education', 'Language', 'Recreation', 'Skiing', 'Shopping', 
+				'Surfing', 'Wandering']
+	holiday_type_dict = {'Arbitrary': 0, 'Active': 1, 'Adventure': 2, 'Bathing': 3,
+	 					'City': 4, 'Diving': 5, 'Education': 6, 'Language': 7,
+				 		'Recreation': 8, 'Skiing': 9, 'Shopping': 10, 'Surfing': 11,
+						'Wandering': 12}
+	holiday_type_matrix =  [[0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+							[0.0, 1.0, 0.8, 0.5, 0.0, 0.4, 0.0, 0.0, 0.7, 0.4, 0.0, 0.4, 0.4],
+							[0.0, 0.7, 1.0, 0.4, 0.0, 0.5, 0.0, 0.0, 0.6, 0.5, 0.0, 0.5, 0.4],
+							[0.0, 0.5, 0.3, 1.0, 0.5, 0.7, 0.0, 0.0, 0.4, 0.0, 0.0, 0.7, 0.0],
+							[0.0, 0.0, 0.0, 0.4, 1.0, 0.0, 0.5, 0.5, 0.3, 0.0, 0.7, 0.0, 0.0],
+							[0.0, 0.5, 0.4, 0.7, 0.0, 1.0, 0.0, 0.0, 0.4, 0.0, 0.0, 0.7, 0.0],
+							[0.0, 0.0, 0.0, 0.0, 0.4, 0.0, 1.0, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0],
+							[0.0, 0.0, 0.0, 0.0, 0.4, 0.0, 0.7, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+							[0.0, 0.7, 0.7, 0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 0.5, 0.5, 0.5, 0.5],
+							[0.0, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 1.0, 0.0, 0.0, 0.3],
+							[0.0, 0.0, 0.0, 0.0, 0.8, 0.0, 0.0, 0.0, 0.3, 0.0, 1.0, 0.0, 0.0],
+							[0.0, 0.5, 0.5, 0.7, 0.0, 0.8, 0.0, 0.0, 0.5, 0.0, 0.0, 1.0, 0.0],
+							[0.0, 0.6, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.2, 0.0, 0.0, 1.0],
+							[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
+	if query_case.holiday_type not in type_list:
+		query_case_holiday_type = 13 #'Other'
+	else:
+		query_case_holiday_type = holiday_type_dict[query_case.holiday_type]
+		source_case_holiday_type = holiday_type_dict[source_case.holiday_type]
 	similarity = holiday_type_matrix[query_case_holiday_type][source_case_holiday_type]
 	return similarity
 
@@ -109,67 +124,57 @@ def region(query_case, source_case):
 		Nations_List.append(["England", "Wales", "Scotland", "Ireland", "London"])#UnitedKingdom
 		Nations_List.append([])#Wales
 		#check "is" relationship (regions that belong to nations) 
-		if query_case_region in Nations:
+		if query_case_region in Nations:# bug when using England
 			index = Nations.index(query_case_region)
 			if source_case_region in Nations_List[index]:
 				similarity = 1.0
 				return similarity
 		#handle case where the holiday type is Language
-		elif query_case.holiday_type == "Language":
+		if query_case.holiday_type == "Language": #changed from elif to if 
 			similarity = 0.0
 			for n in Nations_List:
 				if query_case_region in n:
 					if source_case_region in n:
 						similarity = 1.0
+						return similarity
 					else:
 						similarity = 0.0
-			return similarity		
-		else:
+						return similarity
+			#return similarity		
+		else:  #changed from else to elif
 ###############################################################################	
 			#check "has" relationship (regions that shares similar features)   
-			Island = ["Attica", "Bornholm", "Corfu", "Corsica", "Crete", "Cyprus", 
+			Island = ["Bornholm", "Corfu", "Corsica", "Crete", "Cyprus", 
 					  "Fuerteventura", "GranCanaria", "Greece", "Ibiza", "Ireland",
 					  "Lanzarote", "Lolland", "Mallorca", "Malta", "Rhodes", 
 					  "Spain", "Teneriffe"]
-			Mountains = ["Allgaeu", "Alps", "Attica", "Austria", "Bavaria", "BlackForest", 
-						 "Carinthia", "Chalkidiki", "Corfu", "Corisca", "Crete", 
-						 "Cyprus", "Czechia", "Dolomites", "ErzGebirge", "France", 
-						 "Germany", "GiantMountains", "Harz", "Italy", "Lanzarote", 
-						 "LowerAustria", "Poland", "Rhodes", "SalzbergerLand", 
-						 "Salzkammergut","Slowakei", "Switzerland","Tyrol"]
+			Mountains = ["Allgaeu", "Alps", "Austria", "Bavaria", "BlackForest", 
+						 "Carinthia", "Chalkidiki", "Czechia", "Dolomites", 
+						 "ErzGebirge", "France", "Germany", "GiantMountains", 
+						 "Harz", "Italy",  "LowerAustria", "Poland", 
+						 "SalzbergerLand", "Salzkammergut","Slowakei", "Switzerland",
+						 "Thuringia", "Tyrol"]
 			City = ["Cairo", "London", "Paris", "Egypt", "England", "France", 
 					"UnitedKingdom"]
-			Country = ["Allgaeu", "Algarve", "Austria", "Bavaria", "Belgium",
-					   "BlackForest", "Bornholm", "Brittany", "Bulgaria", "Carinthia", 
-					   "Corfu", "Corsica", "CostaBlanca", "CostaBrava", "CotedAzur", 
-					   "Crete", "Cyprus", "Czechia", "Denmark", "France", "Fuerteventura", 
-					   "Germany", "GranCanaria", "Greece", "Harz", "HighTatra", 
-					   "Holland", "Hungaria", "Ireland", "Italy", "Normandy", 
-					   "Lanzarote", "Lolland", "LowerAustria", "Madeira", "Mallorca", 
-					   "Malta", "Morocco", "Poland", "Portugal", "SalzbergerLand", 
-					   "Salzkammergut", "Slowakei", "Spain", "Sweden", "Switzerland", 
-					   "Teneriffe", "Thuringia", "Tunisia", "Turkey", "Tyrol", 
-					   "UnitedKingdom", "Wales"]
-			Coast = ["AdriaticSea", "Algarve", "Attica", "Belgium", "Bornholm", 
-					 "Bulgaria", "Brittany", "Chalkidiki", "Corfu", "CostaBlanca", 
-					 "CostaBrava", "CotedAzur", "Crete", "Cyprus", "Denmark", "Egypt", 
-					 "Fano", "France", "Fuerteventura", "Germany", "GranCanaria",  
-					 "Greece", "Holland", "Ibiza", "Ireland", "Italy", "Normandy", 
-					 "Lanzarote", "Lolland", "Madeira", "Malta", "Morocco","Poland",
-					 "Portugal", "Rhodes", "Riviera", "Salzkammergut", "Spain", 
-					 "Sweden", "Teneriffe", "Tunisia", "Turkey", "TurkishRiveria", 
-					 "UnitedKingdom", "Wales"]
-			Waters = ["AdriaticSea", "Algarve", "Attica", "Austria", "Balaton", 
-					  "Belgium", "BlackForest", "Bornholm", "Brittany","Bulgaria", 
-					  "Cairo", "Carinthia", "Chalkidiki", "Corfu", "CostaBlanca", 
-					  "CostaBrava", "CotedAzur", "Crete", "Cyprus", "Denmark", "Egypt", 
-					  "France", "Fano", "Fuerteventura", "Germany", "Greece", "Harz", 
-					  "HighTatra", "Holland", "Ireland", "Italy", "Normandy", 
-					  "LakeGarda", "GranCanaria", "Ibiza", "Lanzarote", "Lolland", 
-					  "LowerAustria", "Madeira", "Mallorca", "Malta", "Morocco", 
-					  "Poland", "Portugal", "Rhodes", "Riviera", "Salzkammergut", 
-					  "Spain", "Styria", "Sweden", "Teneriffe", "Thuringia", "Tunisia", 
-					  "Turkey", "TurkishRiveria", "UnitedKingdom", "Wales"]
+			Country = ["Austria", "Belgium","Bulgaria", "Czechia", "Denmark", 
+					   "France", "Germany", "Greece", "Holland", "Hungaria", 
+					   "Ireland", "Italy", "Morocco", "Poland", "Portugal", 
+					   "Slowakei", "Spain", "Sweden", "Switzerland","Scotland", 
+					   "Turkey", "Tyrol", "UnitedKingdom", "Wales"]
+			Coast = ["AdriaticSea", "Algarve", "Attica", "Belgium", 
+					 "Bulgaria", "Brittany", "Chalkidiki", "CostaBlanca", 
+					 "CostaBrava", "CotedAzur", "Denmark", "Egypt", 
+					 "Fano", "France", "Germany",  
+					 "Greece", "Holland", "Ireland", "Italy", "Normandy", 
+					 "Lanzarote", "Madeira", "Morocco","Poland",
+					 "Portugal", "Riviera", "Salzkammergut", "Spain", 
+					 "Sweden", "Tunisia", "Turkey", "TurkishRiveria"]
+			Waters = ["AdriaticSea", "Austria", "Belgium", "Brittany","Bulgaria", 
+					  "Cairo", "Corfu", "Denmark", "Egypt", "France", "Germany", 
+					  "Greece", "Holland", "Ireland", "Italy", "Madeira", "Mallorca", 
+					  "Malta", "Morocco", "Poland", "Portugal", "Riviera", 
+					  "Salzkammergut", "Spain", "Sweden","Turkey", "TurkishRiveria", 
+					  "UnitedKingdom", "Wales"]
 			Lake = ["Austria", "Balaton", "BlackForest", "Carinthia", "Crete", "Germany",
 					"Harz", "HighTatra", "Hungaria","Italy", "LakeGarda", "Poland", 
 					"Salzkammergut", "Styria"]

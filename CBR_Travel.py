@@ -252,9 +252,9 @@ class Application(Frame):
 #read in cases from case base
 cases = []
 def read_in_cases():
-	workbook = xlrd.open_workbook('Case/Regions_Test.xlsx')
+	#workbook = xlrd.open_workbook('Case/Regions_Test.xlsx')
 	#workbook = xlrd.open_workbook('CASE/Test_Workbook.xlsx')
-	#workbook = xlrd.open_workbook('CASE/TRAVEL.XLS')
+	workbook = xlrd.open_workbook('CASE/TRAVEL.XLS')
 	print(workbook.nsheets)
 	sheet = workbook.sheet_by_index(0)
 	print(sheet.ncols)
