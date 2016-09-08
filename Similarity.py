@@ -131,7 +131,7 @@ def region(query_case, source_case):
 					  "Fuerteventura", "GranCanaria", "Greece", "Ibiza", "Ireland",
 					  "Lanzarote", "Lolland", "Mallorca", "Malta", "Rhodes", 
 					  "Spain", "Teneriffe"]
-			Mountains = ["Alps", "Attica", "Austria", "Bavaria", "BlackForest", 
+			Mountains = ["Allgaeu", "Alps", "Attica", "Austria", "Bavaria", "BlackForest", 
 						 "Carinthia", "Chalkidiki", "Corfu", "Corisca", "Crete", 
 						 "Cyprus", "Czechia", "Dolomites", "ErzGebirge", "France", 
 						 "Germany", "GiantMountains", "Harz", "Italy", "Lanzarote", 

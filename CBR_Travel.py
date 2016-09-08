@@ -161,22 +161,63 @@ class Application(Frame):
 						self.Duration_cb.get(), self.Season_cb.get(), self.Accommodation_Type_cb.get(),
 						"Hotel")
 		
-		Total_Weight = self.Holiday_Type_Weight_cb.get() + self.Price_Weight_cb.get() + \
-					   self.Number_Of_Persons_Weight_cb.get() + self.Region_Weight_cb.get() + \
-					   self.Transportation_Weight_cb.get() + self.Duration_Weight_cb.get() + \
-					   self.Season_Weight_cb.get() + self.Accommodation_Type_Weight_cb.get()
+		print ("type of cb weight")
+		print(type(self.Holiday_Type_Weight_cb.get()))
+		Total_Weight = int(self.Holiday_Type_Weight_cb.get()) + int(self.Price_Weight_cb.get()) + \
+					   int(self.Number_Of_Persons_Weight_cb.get()) + int(self.Region_Weight_cb.get()) + \
+					   int(self.Transportation_Weight_cb.get()) + int(self.Duration_Weight_cb.get()) + \
+					   int(self.Season_Weight_cb.get()) + int(self.Accommodation_Type_Weight_cb.get())
 		Score_list = []				
 		output = ""
-		for i in range(len(Cases)):
-			holiday_type_similarity = Similarity.holiday_type(query_case, Cases[i])
-			price_similariy = Similarity.price(query_case, Cases[i])
-			number_of_persons_similarity = Similarity.number_of_persons(query_case, Cases[i])
-			region_similarity = Similarity.region(query_case, Cases[i])
-			transportation_similarity = Similarity.transportation(query_case, Cases[i])
-			duration_similarity = Similarity.duration(query_case, Cases[i])
-			season_similarity = Similarity.season(query_case, Cases[i])
-			accommodation_similarity = Similarity.accommodation(query_case, Cases[i])			
+		index_list = []
+		for i in range(len(cases)):
+			holiday_type_similarity = Similarity.holiday_type(query_case, cases[i])
+			price_similariy = Similarity.price(query_case, cases[i])
+			number_of_persons_similarity = Similarity.number_of_persons(query_case, cases[i])
+			region_similarity = Similarity.region(query_case, cases[i])
+			transportation_similarity = Similarity.transportation(query_case, cases[i])
+			duration_similarity = Similarity.duration(query_case, cases[i])
+			season_similarity = Similarity.season(query_case, cases[i])
+			accommodation_similarity = Similarity.accommodation(query_case, cases[i])		
+				
 			#calculate global score
+			global_holiday_type = holiday_type_similarity * int(self.Holiday_Type_Weight_cb.get())
+			global_price = price_similariy * int(self.Price_Weight_cb.get())
+			global_number_of_persons = number_of_persons_similarity *\
+										int(self.Number_Of_Persons_Weight_cb.get())
+			global_region = region_similarity * int(self.Region_Weight_cb.get())
+			global_transportation = transportation_similarity * int(self.Transportation_Weight_cb.get())
+			global_duration = duration_similarity * int(self.Duration_Weight_cb.get())
+			global_season = season_similarity * int(self.Season_Weight_cb.get())
+			global_accommodation = accommodation_similarity * int(self.Accommodation_Type_Weight_cb.get())
+			
+			total_similarity = global_holiday_type + global_price + global_number_of_persons+ \
+								global_region + global_transportation + global_duration + \
+								global_season + global_accommodation
+			global_similarity = total_similarity/Total_Weight
+			index_list.append([i, global_similarity, [holiday_type_similarity, 
+								price_similariy, number_of_persons_similarity,
+								region_similarity,  transportation_similarity,
+								duration_similarity, season_similarity, 
+								accommodation_similarity]])
+		print ("type of hotel")
+		print(type(cases[0].hotel))
+		
+		index_list.sort(key= lambda x: x[1], reverse = True)
+		k = 10
+		for i in range(k):
+			cases_index = index_list[i][0]
+			case = cases[cases_index]
+			output += "Similarity score: " + str(index_list[i][1]) + "\n" + \
+						"Holiday Type: " + case.holiday_type + str(index_list[i][2][0]) + "\n" +\
+						"Price: " + str(case.price) + str(index_list[i][2][1]) + "\n" + \
+						"Number of Persons: " + str(case.number_of_persons) + str(index_list[i][2][2]) + "\n" + \
+						"Region: " + case.region + str(index_list[i][2][3]) + "\n" + \
+						"Transportation: " + case.transportation + str(index_list[i][2][4]) + "\n" + \
+						"Duration: " + str(case.duration) + str(index_list[i][2][5]) + "\n" + \
+						"Season: " + case.season + str(index_list[i][2][6]) + "\n" + \
+						"Accommodation: "+ case.accommodation + str(index_list[i][2][7]) +"\n" +\
+						"Hotel: " + case.hotel + "\n \n" 	
 			
 		#for x in cases:
 		#	holiday_type_similarity = Similarity.holiday_type(query_case, x)
@@ -189,11 +230,11 @@ class Application(Frame):
 		#	accommodation_similarity = Similarity.accommodation(query_case, x)
 			
 			
-			output += "Similarity scores ****Test**** \n" + str(holiday_type_similarity) +"\n"+ \
-				 str(price_similariy) + "\n" + str(number_of_persons_similarity) + "\n" + \
-				 str(region_similarity) + "\n" + str(transportation_similarity) + "\n" + \
-				 str(duration_similarity) + "\n" + str(season_similarity) + "\n" + \
-				 str(accommodation_similarity) +"\n" 
+			#output += "Similarity scores ****Test**** \n" + str(holiday_type_similarity) +"\n"+ \
+			#	 str(price_similariy) + "\n" + str(number_of_persons_similarity) + "\n" + \
+			#	 str(region_similarity) + "\n" + str(transportation_similarity) + "\n" + \
+			#	 str(duration_similarity) + "\n" + str(season_similarity) + "\n" + \
+			#	 str(accommodation_similarity) +"\n" 
 					
 			#	>>> mylist = [["quux", 1, "a"], ["bar", 0, "b"]]
 			#	>>> mylist.sort(key=lambda x: x[1])
