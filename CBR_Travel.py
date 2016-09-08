@@ -114,23 +114,39 @@ class Application(Frame):
 		self.text = Text(self, width = 35, height = 11, wrap = WORD)
 		self.text.grid(row = 14, column = 1, columnspan = 2, sticky = W)
 	def reveal(self):
-		#handling blank entries
+		#handling blank entries  Weight default values are 1
 		if len(self.Holiday_Type_cb.get()) == 0:
 			self.Holiday_Type_cb.set("Arbitrary")
+		if len(self.Holiday_Type_Weight_cb.get()) == 0:
+			self.Holiday_Type_Weight_cb.set(1)
 		if len(self.Price_Entry.get()) == 0:
 			self.Price_Entry.insert(0, 10000)#maximum price
+		if len(self.Price_Weight_cb.get()) == 0:
+			self.Price_Weight_cb.set(1)
 		if len(self.Number_Of_Persons_cb.get()) == 0:
 			self.Number_Of_Persons_cb.set(1)#minimum number of people
+		if len(self.Number_Of_Persons_Weight_cb.get()) == 0:
+			self.Number_Of_Persons_Weight_cb.set(1)
 		if len(self.Region_cb.get()) == 0:
 			self.Region_cb.set("Arbitrary")
+		if len(self.Region_Weight_cb.get()) == 0:
+			self.Region_Weight_cb.set(1)
 		if len(self.Transportation_cb.get()) == 0:
 			self.Transportation_cb.set("Arbitrary")
+		if len(self.Transportation_Weight_cb.get()) == 0:
+			self.Transportation_Weight_cb.set(1)
 		if len(self.Duration_cb.get()) == 0:
 			self.Duration_cb.set(1)
+		if len(self.Duration_Weight_cb.get()) == 0:
+			self.Duration_Weight_cb.set(1)
 		if len(self.Season_cb.get()) == 0:
 			self.Season_cb.set("Arbitrary")
+		if len(self.Season_Weight_cb.get()) == 0:
+			self.Season_Weight_cb.set(1)
 		if len(self.Accommodation_Type_cb.get()) == 0:
 			self.Accommodation_Type_cb.set("Arbitrary")
+		if len(self.Accommodation_Type_Weight_cb.get()) == 0:
+			self.Accommodation_Type_Weight_cb.set(1)
 
 		#if len(self.Hotel_Entry.get()) == 0:
 		#	self.Hotel_Entry.insert(0, "Arbitrary")
@@ -144,31 +160,46 @@ class Application(Frame):
 						self.Number_Of_Persons_cb.get(), self.Region_cb.get(), self.Transportation_cb.get(),
 						self.Duration_cb.get(), self.Season_cb.get(), self.Accommodation_Type_cb.get(),
 						"Hotel")
+		
+		Total_Weight = self.Holiday_Type_Weight_cb.get() + self.Price_Weight_cb.get() + \
+					   self.Number_Of_Persons_Weight_cb.get() + self.Region_Weight_cb.get() + \
+					   self.Transportation_Weight_cb.get() + self.Duration_Weight_cb.get() + \
+					   self.Season_Weight_cb.get() + self.Accommodation_Type_Weight_cb.get()
+		Score_list = []				
 		output = ""
-		for x in cases:
-			holiday_type_similarity = Similarity.holiday_type(query_case, x)
-			price_similariy = Similarity.price(query_case, x)
-			number_of_persons_similarity = Similarity.number_of_persons(query_case, x)
-			region_similarity = Similarity.region(query_case, x)
-			transportation_similarity = Similarity.transportation(query_case, x)
-			duration_similarity = Similarity.duration(query_case, x)
-			season_similarity = Similarity.season(query_case, x)
-			accommodation_similarity = Similarity.accommodation(query_case, x)
+		for i in range(len(Cases)):
+			holiday_type_similarity = Similarity.holiday_type(query_case, Cases[i])
+			price_similariy = Similarity.price(query_case, Cases[i])
+			number_of_persons_similarity = Similarity.number_of_persons(query_case, Cases[i])
+			region_similarity = Similarity.region(query_case, Cases[i])
+			transportation_similarity = Similarity.transportation(query_case, Cases[i])
+			duration_similarity = Similarity.duration(query_case, Cases[i])
+			season_similarity = Similarity.season(query_case, Cases[i])
+			accommodation_similarity = Similarity.accommodation(query_case, Cases[i])			
+			#calculate global score
+			
+		#for x in cases:
+		#	holiday_type_similarity = Similarity.holiday_type(query_case, x)
+		#	price_similariy = Similarity.price(query_case, x)
+		#	number_of_persons_similarity = Similarity.number_of_persons(query_case, x)
+		#	region_similarity = Similarity.region(query_case, x)
+		#	transportation_similarity = Similarity.transportation(query_case, x)
+		#	duration_similarity = Similarity.duration(query_case, x)
+		#	season_similarity = Similarity.season(query_case, x)
+		#	accommodation_similarity = Similarity.accommodation(query_case, x)
+			
+			
 			output += "Similarity scores ****Test**** \n" + str(holiday_type_similarity) +"\n"+ \
 				 str(price_similariy) + "\n" + str(number_of_persons_similarity) + "\n" + \
 				 str(region_similarity) + "\n" + str(transportation_similarity) + "\n" + \
 				 str(duration_similarity) + "\n" + str(season_similarity) + "\n" + \
 				 str(accommodation_similarity) +"\n" 
-				
-		
-		
-		
-			
-		#holiday_type_similarity = Similarity.holiday_type(query_case, cases[0])	
-		#print("Holiday Type Similarity")
-		#print(holiday_type_similarity)			
-		#cases_output = 	"Holiday Type: " + self.Holiday_Type_cb.get() + "\n" +\
-		#				"Price: " + self.Price_Entry.get()  
+					
+			#	>>> mylist = [["quux", 1, "a"], ["bar", 0, "b"]]
+			#	>>> mylist.sort(key=lambda x: x[1])
+			#	>>> print mylist
+			#gives:
+			#[['bar', 0, 'b'], ['quux', 1, 'a']]
 		x = 'a string'
 		print("this is x ") 
 		print(type(x))
