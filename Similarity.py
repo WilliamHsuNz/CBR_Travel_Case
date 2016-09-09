@@ -85,6 +85,9 @@ def region(query_case, source_case):
 	if query_case_region == source_case_region:
 		similarity = 1.0
 		return similarity
+	if query_case_region == "Arbitrary":
+		similarity = 1.0
+		return similarity
 	else:
 ###############################################################################	
 		Nations = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czechia", "Denmark", 
@@ -123,7 +126,7 @@ def region(query_case, source_case):
 		Nations_List.append(["TurkishAegeanSea", "TurkishRiviera"])#Turkey
 		Nations_List.append(["England", "Wales", "Scotland", "Ireland", "London"])#UnitedKingdom
 		Nations_List.append([])#Wales
-		#check "is" relationship (regions that belong to nations) 
+		#check "containing" relationship (regions that are contained by nations) 
 		if query_case_region in Nations:# bug when using England
 			index = Nations.index(query_case_region)
 			if source_case_region in Nations_List[index]:
@@ -200,7 +203,7 @@ def region(query_case, source_case):
 			number_of_steps = number_of_category_count + 1
 			similarity_value_for_each_step = 1.0/number_of_steps
 			similarity = similarity_value_for_each_step * shared_category_count
-			return similarity
+		return similarity 
 ###############################################################################			
 
 def transportation(query_case, source_case):
@@ -253,20 +256,24 @@ def duration(query_case, source_case):  #range between 1 and 56
 
 #reconsider this method... use matrix		
 def season(query_case, source_case):
-	season_dict =  {'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 
-					'June': 5, 'July': 6, 'August': 7, 'September': 8, 'October': 9,
-					'November': 10, 'December': 11}
-	query_season = season_dict[query_case.season]
-	source_season = season_dict[source_case.season]
-	difference = abs(query_season - source_season) 
-	if difference > 6:
-		min_season = min(query_season, source_season)
-		max_season = max(query_season, source_season)
-		difference = abs(max_season - (min_season + 12))
-	similarity = 1.0 - (difference * 0.2)
-	if similarity < 0.0:
-		similarity = 0.0
-	return similarity
+	if query_case.season == "Arbitrary":
+		similarity = 1.0
+		return similarity
+	else:
+		season_dict =  {'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 
+						'June': 5, 'July': 6, 'August': 7, 'September': 8, 'October': 9,
+						'November': 10, 'December': 11}
+		query_season = season_dict[query_case.season]
+		source_season = season_dict[source_case.season]
+		difference = abs(query_season - source_season) 
+		if difference > 6:
+			min_season = min(query_season, source_season)
+			max_season = max(query_season, source_season)
+			difference = abs(max_season - (min_season + 12))
+		similarity = 1.0 - (difference * 0.3)
+		if similarity < 0.0:
+			similarity = 0.0
+		return similarity
 
 def accommodation(query_case, source_case):
 	accommodation_type_dict = {"Arbitrary": 0, "HolidayFlat": 0, "OneStar": 1, "TwoStars": 2,

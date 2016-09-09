@@ -85,8 +85,9 @@ class Application(Frame):
 		self.Duration_Weight_cb.grid(row=8, column = 2, sticky = W)
 		
 		self.Season = Label(self, text="Season").grid(row = 9, column = 0, sticky = E)
-		Season =	("Arbitrary", "Spring", "Summer", "Autumn", "Winter", "January", "February", "March", 
-					"April", "May", "June", "July", "August", "September", "October", "November", "December")
+		Season =	("Arbitrary", "January", "February", "March", "April", "May", 
+					 "June", "July", "August", "September", "October", "November", 
+					 "December")  # removed "Spring", "Summer", "Autumn", "Winter", 
 		self.Season_cb = ttk.Combobox(self, values = Season, state = "readonly")
 		self.Season_cb.grid(row = 9, column = 1, sticky = W)
 		self.Season_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
