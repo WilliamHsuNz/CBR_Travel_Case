@@ -205,7 +205,7 @@ class Application(Frame):
 		print(type(cases[0].hotel))
 		
 		index_list.sort(key= lambda x: x[1], reverse = True)
-		k = 10
+		k = 200
 		for i in range(k):
 			cases_index = index_list[i][0]
 			case = cases[cases_index]

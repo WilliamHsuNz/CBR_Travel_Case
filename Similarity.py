@@ -127,7 +127,7 @@ def region(query_case, source_case):
 		Nations_List.append(["England", "Wales", "Scotland", "Ireland", "London"])#UnitedKingdom
 		Nations_List.append([])#Wales
 		#check "containing" relationship (regions that are contained by nations) 
-		if query_case_region in Nations:# bug when using England
+		if query_case_region in Nations:# fix bug when using England
 			index = Nations.index(query_case_region)
 			if source_case_region in Nations_List[index]:
 				similarity = 1.0
@@ -135,63 +135,87 @@ def region(query_case, source_case):
 		#handle case where the holiday type is Language
 		if query_case.holiday_type == "Language": #changed from elif to if 
 			similarity = 0.0
-			for n in Nations_List:
-				if query_case_region in n:
-					if source_case_region in n:
+			for i in range(len(Nations_List)):
+				if query_case_region in Nations_List[i]:
+					#check if query case and source case belong in the same country
+					if source_case_region in Nations_List[i]:
 						similarity = 1.0
+						return similarity
+					#check if source case is a nation that the query case is in
+					if source_case_region == Nations[i]:
+						similarity = 1.0	
 						return similarity
 					else:
 						similarity = 0.0
 						return similarity
 			#return similarity		
-		else:  #changed from else to elif
+		else: 
 ###############################################################################	
+			similarity_1 = 0.0
+			#handle if source contains query
+			if source_case_region in Nations:
+				index = Nations.index(source_case_region)
+				if query_case_region in Nations_List[index]:
+					print("Nation is ")
+					print(Nations_List[index])
+					similarity_1 = 0.7
+					print(similarity_1)
 			#check "has" relationship (regions that shares similar features)   
 			Island = ["Bornholm", "Corfu", "Corsica", "Crete", "Cyprus", 
-					  "Fuerteventura", "GranCanaria", "Greece", "Ibiza", "Ireland",
+					  "Fuerteventura", "GranCanaria", "Ibiza", "Ireland",
 					  "Lanzarote", "Lolland", "Mallorca", "Malta", "Rhodes", 
-					  "Spain", "Teneriffe"]
-			Mountains = ["Allgaeu", "Alps", "Austria", "Bavaria", "BlackForest", 
-						 "Carinthia", "Chalkidiki", "Czechia", "Dolomites", 
-						 "ErzGebirge", "France", "Germany", "GiantMountains", 
-						 "Harz", "Italy",  "LowerAustria", "Poland", 
-						 "SalzbergerLand", "Salzkammergut","Slowakei", "Switzerland",
+					   "Teneriffe"]
+			Mountains = ["Allgaeu", "Alps", "Bavaria", "BlackForest", 
+						 "Carinthia", "Chalkidiki", "Dolomites", 
+						 "ErzGebirge","GiantMountains", 
+						 "Harz", "LowerAustria", 
+						 "SalzbergerLand", "Salzkammergut", "Switzerland",
 						 "Thuringia", "Tyrol"]
-			City = ["Cairo", "London", "Paris", "Egypt", "England", "France", 
-					"UnitedKingdom"]
+			City = ["Cairo", "London", "Paris", "Egypt"]
 			Country = ["Austria", "Belgium","Bulgaria", "Czechia", "Denmark", 
 					   "France", "Germany", "Greece", "Holland", "Hungaria", 
 					   "Ireland", "Italy", "Morocco", "Poland", "Portugal", 
 					   "Slowakei", "Spain", "Sweden", "Switzerland","Scotland", 
-					   "Turkey", "Tyrol", "UnitedKingdom", "Wales"]
-			Coast = ["AdriaticSea", "Algarve", "Attica", "Belgium", 
-					 "Bulgaria", "Brittany", "Chalkidiki", "CostaBlanca", 
-					 "CostaBrava", "CotedAzur", "Denmark", "Egypt", 
-					 "Fano", "France", "Germany",  
-					 "Greece", "Holland", "Ireland", "Italy", "Normandy", 
-					 "Lanzarote", "Madeira", "Morocco","Poland",
-					 "Portugal", "Riviera", "Salzkammergut", "Spain", 
-					 "Sweden", "Tunisia", "Turkey", "TurkishRiveria"]
-			Waters = ["AdriaticSea", "Austria", "Belgium", "Brittany","Bulgaria", 
-					  "Cairo", "Corfu", "Denmark", "Egypt", "France", "Germany", 
-					  "Greece", "Holland", "Ireland", "Italy", "Madeira", "Mallorca", 
-					  "Malta", "Morocco", "Poland", "Portugal", "Riviera", 
-					  "Salzkammergut", "Spain", "Sweden","Turkey", "TurkishRiveria", 
-					  "UnitedKingdom", "Wales"]
-			Lake = ["Austria", "Balaton", "BlackForest", "Carinthia", "Crete", "Germany",
-					"Harz", "HighTatra", "Hungaria","Italy", "LakeGarda", "Poland", 
+					   "Turkey", "UnitedKingdom", "Wales"]
+			Coast = ["Algarve", "Attica", 
+					 "Brittany", "Chalkidiki", "CostaBlanca", 
+					 "CostaBrava", "CotedAzur", "Egypt""Fano",   
+					 "Normandy","Lanzarote", "Madeira","Riviera", 
+					 "Tunisia", "TurkishRiveria"]
+			#Waters = ["Cairo", "Corfu", "Denmark", "Egypt", "France", "Germany", 
+			#		  "Greece", "Holland", "Ireland", "Italy", "Madeira", "Mallorca", 
+			#		  "Malta", "Morocco", "Poland", "Portugal", "Riviera", 
+			#		  "Salzkammergut", "Spain", "Sweden","Turkey", "TurkishRiveria", 
+			#		  "UnitedKingdom", "Wales"]
+			Lake = ["Balaton", "BlackForest", "Carinthia", "Crete",
+					"Harz", "HighTatra", "LakeGarda", 
 					"Salzkammergut", "Styria"]
-			Sea = ["AdriaticSea", "Atlantic", "BalticSea", "MediterraneanSea", "NorthSea", 
-				   "TurkishAegeanSea"]
+			#Sea = ["AdriaticSea", "Atlantic", "BalticSea", "MediterraneanSea", "NorthSea", 
+			#	   "TurkishAegeanSea"]
+			AdriaticSea = ["Fano", "Italy", "AdriaticSea"]
+			Atlantic = ["Spain", "Morocco", "Ireland", "Portugal", "Algarve", "Madeira",
+						"France", "Fuerteventura", "Lanzarote", 
+				 		"GranCanaria", "Teneriffe", "Brittany", "Riviera", "Atlantic" ]
+			BalticSea = ["Bornholm", "Poland", "Sweden", "Lolland", "Germany", "Denmark", "BalticSea"]
+			MediterraneanSea = ["Corsica", "CostaBlanca", "CotedAzur", "Crete", "Cyprus", "Ibiza",
+ 								"Tunisia", "Mallorca", "Malta", "TurkishRiviera", "MediterraneanSea"]
+			NorthSea = ["UnitedKingdom", "Belgium", "Holland", "Germany", "Denmark", "NorthSea"]
+			TurkishAegeanSea = ["Chalkidiki", "Rhodes", "Greece", "Turkey", "TurkishAegeanSea"]
 			Category_List = []
 			Category_List.append(Island)
 			Category_List.append(Mountains)
 			Category_List.append(City)
 			Category_List.append(Country)
 			Category_List.append(Coast)
-			Category_List.append(Waters)
+			#Category_List.append(Waters)
 			Category_List.append(Lake)
-			Category_List.append(Sea)
+			#Category_List.append(Sea)
+			Category_List.append(AdriaticSea)
+			Category_List.append(Atlantic)
+			Category_List.append(BalticSea)
+			Category_List.append(MediterraneanSea)
+			Category_List.append(NorthSea)
+			Category_List.append(TurkishAegeanSea)
 			#form step function based on how many categories the query_case_region associates
 			number_of_category_count = 0
 			shared_category_count = 0
@@ -202,7 +226,13 @@ def region(query_case, source_case):
 						shared_category_count = shared_category_count + 1
 			number_of_steps = number_of_category_count + 1
 			similarity_value_for_each_step = 1.0/number_of_steps
-			similarity = similarity_value_for_each_step * shared_category_count
+			similarity_2 = similarity_value_for_each_step * shared_category_count
+			print("similarity 1 and 2")
+			print(similarity_1)
+			print(similarity_2)
+			similarity = max(similarity_1, similarity_2)
+			print("similarity")
+			print(similarity)
 		return similarity 
 ###############################################################################			
 
