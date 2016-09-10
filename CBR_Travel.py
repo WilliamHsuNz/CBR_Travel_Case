@@ -61,7 +61,7 @@ class Application(Frame):
 					"London", "LowerAustria", "Madeira", "Mallorca", "Malta", "MediterraneanSea", 
 					"Morocco", "Normandy", "NorthSea", "Paris", "Poland", "Portugal", "Rhodes", 
 					"Riviera", "SalzbergerLand", "Salzkammergut", "Scotland", "Slowakei", "Spain", 
-					"Sweden", "Switzerland", "Styria", "Teneriffe", "Thuringia", "Tunisia", 
+					"Styria", "Sweden", "Switzerland", "Teneriffe", "Thuringia", "Tunisia", 
 					"Turkey", "TurkishAegeanSea", "TurkishRiviera", "Tyrol", "UnitedKingdom", 
 					"Wales")
 		self.Region_cb = ttk.Combobox(self, values = Region, state= "normal")
@@ -122,6 +122,13 @@ class Application(Frame):
 			self.Holiday_Type_Weight_cb.set(1)
 		if len(self.Price_Entry.get()) == 0:
 			self.Price_Entry.insert(0, 10000)#maximum price
+		#handle non int input for price
+		try:
+			x = int(self.Price_Entry.get())
+		except ValueError:
+			output = "Value for Price must be an integer"
+			self.text.delete(0.0, END)
+			self.text.insert(0.0, output)	
 		if len(self.Price_Weight_cb.get()) == 0:
 			self.Price_Weight_cb.set(1)
 		if len(self.Number_Of_Persons_cb.get()) == 0:
