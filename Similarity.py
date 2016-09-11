@@ -70,6 +70,11 @@ def number_of_persons(query_case, source_case):
 			similarity = 0.5
 		else:
 			similarity = 0.0
+	elif query_number_of_persons == 3:
+		if source_number_of_persons == 4:
+			similarity = 0.5
+		else:
+			similarity = 0.0
 	else:
 	#handle general cases of query number of persons
 		upper_bound = query_number_of_persons * 1.5
@@ -145,7 +150,7 @@ def region(query_case, source_case):
 						return similarity
 					#Check if source case is a nation that the query case is in
 					if source_case_region == Nations[i]:
-						similarity = 0.8	
+						similarity = 1.0	
 						return similarity
 					else:
 						similarity = 0.0
@@ -278,17 +283,6 @@ def season(query_case, source_case):
 		return similarity
 
 def accommodation(query_case, source_case):
-	#accommodation_type_dict = {"Arbitrary": 0, "HolidayFlat": 1, "OneStar": 2, "TwoStars": 3,
-	 #							"ThreeStars": 4, "FourStars": 5, "FiveStars": 6}
-	#query_accommodation_type = accommodation_type_dict[query_case.accommodation]
-	#source_accommodation_type = accommodation_type_dict[source_case.accommodation]
-	#accommodation_type_matrix = [[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-	#							 [0.6, 1.0, 0.6, 0.2, 0.0, 0.0, 0.0],
-	#							 [0.2, 0.6, 1.0, 0.6, 0.2, 0.0, 0.0],
-	#							 [0.0, 0.2, 0.6, 1.0, 0.6, 0.2, 0.0],
-	#							 [0.0, 0.0, 0.2, 0.6, 1.0, 0.6, 0.2],
-	#							 [0.0, 0.0, 0.0, 0.2, 0.6, 1.0, 0.6],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.2, 0.6, 1.0]]
 	accommodation_type_dict = {"Arbitrary": 0, "HolidayFlat": 0, "OneStar": 1, "TwoStars": 2,
 								"ThreeStars": 3, "FourStars": 4, "FiveStars": 5}
 	query_accommodation_type = accommodation_type_dict[query_case.accommodation]
@@ -299,6 +293,5 @@ def accommodation(query_case, source_case):
 								 [0.1, 0.4, 0.7, 1.0, 1.0, 1.0],
 								 [0.0, 0.1, 0.4, 0.7, 1.0, 1.0],
 								 [0.0, 0.0, 0.1, 0.4, 0.7, 1.0]]
-	#similarity = accommodation_type_matrix[query_accommodation_type][source_accommodation_type]
 	similarity = accommodation_type_matrix[query_accommodation_type][source_accommodation_type]
 	return similarity

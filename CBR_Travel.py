@@ -208,27 +208,27 @@ class Application(Frame):
 		for i in range(k):
 			cases_index = index_list[i][0]
 			case = cases[cases_index]
-			#output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
-			#			"Holiday Type: " + case.holiday_type + "\n" + \
-			#			"Price: " + str(case.price) + "\n" + \
-			#			"Number of Persons: " + str(case.number_of_persons) + "\n" + \
-			#			"Region: " + case.region + "\n" + \
-			#			"Transportation: " + case.transportation + "\n" + \
-			#			"Duration: " + str(case.duration) + "\n" + \
-			#			"Season: " + case.season + "\n" + \
-			#			"Accommodation: "+ case.accommodation + "\n" + \
-			#			"Hotel: " + case.hotel + "\n \n" 	
-			#Out put for displaying individual local similarity scores
 			output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
-						"Holiday Type: " + case.holiday_type + "\n" + str(index_list[i][2][0]) + "\n" +\
-						"Price: " + str(case.price) + "\n" + str(index_list[i][2][1]) + "\n" + \
-						"Number of Persons: " + str(case.number_of_persons) + "\n" + str(index_list[i][2][2]) + "\n" + \
-						"Region: " + case.region + "\n" + str(index_list[i][2][3]) + "\n" + \
-						"Transportation: " + case.transportation + "\n" + str(index_list[i][2][4]) + "\n" + \
-						"Duration: " + str(case.duration) + "\n" + str(index_list[i][2][5]) + "\n" + \
-						"Season: " + case.season + "\n" + str(index_list[i][2][6]) + "\n" + \
-						"Accommodation: "+ case.accommodation + "\n" +  str(index_list[i][2][7]) +"\n" +\
+						"Holiday Type: " + case.holiday_type + "\n" + \
+						"Price: " + str(case.price) + "\n" + \
+						"Number of Persons: " + str(case.number_of_persons) + "\n" + \
+						"Region: " + case.region + "\n" + \
+						"Transportation: " + case.transportation + "\n" + \
+						"Duration: " + str(case.duration) + "\n" + \
+						"Season: " + case.season + "\n" + \
+						"Accommodation: "+ case.accommodation + "\n" + \
 						"Hotel: " + case.hotel + "\n \n" 	
+			#Out put for displaying individual local similarity scores
+			#output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
+			#			"Holiday Type: " + case.holiday_type + "\n" + str(index_list[i][2][0]) + "\n" +\
+			#			"Price: " + str(case.price) + "\n" + str(index_list[i][2][1]) + "\n" + \
+			#			"Number of Persons: " + str(case.number_of_persons) + "\n" + str(index_list[i][2][2]) + "\n" + \
+			#			"Region: " + case.region + "\n" + str(index_list[i][2][3]) + "\n" + \
+			#			"Transportation: " + case.transportation + "\n" + str(index_list[i][2][4]) + "\n" + \
+			#			"Duration: " + str(case.duration) + "\n" + str(index_list[i][2][5]) + "\n" + \
+			#			"Season: " + case.season + "\n" + str(index_list[i][2][6]) + "\n" + \
+			#			"Accommodation: "+ case.accommodation + "\n" +  str(index_list[i][2][7]) +"\n" +\
+			#			"Hotel: " + case.hotel + "\n \n" 	
 		#Display output			
 		self.text.delete(0.0, END)
 		self.text.insert(0.0, output)
