@@ -1,8 +1,12 @@
 """
-Python Case Class
+CBR for the Travel domain
+Case Class
 Author: William Hsu
-19/August/2016		
+Date:  11/September/2016
+
+For the program CBR_Travel.py		
 """
+
 class Case:
 	def __init__(self, case, journey_code, holiday_type, price, number_of_persons,
 		region, transportation, duration, season, accommodation, hotel):

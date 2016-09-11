@@ -5,7 +5,7 @@ from tkinter import ttk
 import Similarity
 #import math
 """
-CBR Travel Case
+CBR for the Travel domain
 Author: William Hsu
 Date:  11/September/2016
 This program uses the k-NN algorithm to retrieve cases based on user defined 
@@ -15,7 +15,6 @@ individual attributes.
 To Run the Program use the commandline command:
 
 python3 CBR_Travel.py
-
 """
 
 
@@ -154,21 +153,16 @@ class Application(Frame):
 		if len(self.Accommodation_Type_Weight_cb.get()) == 0:
 			self.Accommodation_Type_Weight_cb.set(1)
 
-		#if len(self.Hotel_Entry.get()) == 0:
-		#	self.Hotel_Entry.insert(0, "Arbitrary")
-		#if len(self.k_Entry.get()) == 0:
-		#	self.k_Entry.insert(0,1)	
-
-		print(self.Holiday_Type_cb.get() + "\n" + self.Price_Entry.get() + "\n" + self.Number_Of_Persons_cb.get() + "\n" +\
-				self.Region_cb.get() + "\n" + self.Transportation_cb.get() + "\n" + self.Duration_cb.get() + "\n" + \
-				self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n")
+		#print(self.Holiday_Type_cb.get() + "\n" + self.Price_Entry.get() + "\n" + self.Number_Of_Persons_cb.get() + "\n" +\
+		#		self.Region_cb.get() + "\n" + self.Transportation_cb.get() + "\n" + self.Duration_cb.get() + "\n" + \
+		#		self.Season_cb.get() + "\n" + self.Accommodation_Type_cb.get() + "\n")
 		query_case = 	Case('Query Journey', '0', self.Holiday_Type_cb.get(), self.Price_Entry.get(), 
 						self.Number_Of_Persons_cb.get(), self.Region_cb.get(), self.Transportation_cb.get(),
 						self.Duration_cb.get(), self.Season_cb.get(), self.Accommodation_Type_cb.get(),
 						"Hotel")
 		
-		print ("type of cb weight")
-		print(type(self.Holiday_Type_Weight_cb.get()))
+		#print ("type of cb weight")
+		#print(type(self.Holiday_Type_Weight_cb.get()))
 		Total_Weight = int(self.Holiday_Type_Weight_cb.get()) + int(self.Price_Weight_cb.get()) + \
 					   int(self.Number_Of_Persons_Weight_cb.get()) + int(self.Region_Weight_cb.get()) + \
 					   int(self.Transportation_Weight_cb.get()) + int(self.Duration_Weight_cb.get()) + \
@@ -177,6 +171,7 @@ class Application(Frame):
 		output = ""
 		index_list = []
 		for i in range(len(cases)):
+			#Calculate local similarity scores
 			holiday_type_similarity = Similarity.holiday_type(query_case, cases[i])
 			price_similariy = Similarity.price(query_case, cases[i])
 			number_of_persons_similarity = Similarity.number_of_persons(query_case, cases[i])
@@ -186,7 +181,7 @@ class Application(Frame):
 			season_similarity = Similarity.season(query_case, cases[i])
 			accommodation_similarity = Similarity.accommodation(query_case, cases[i])		
 				
-			#calculate global score
+			#Calculate global score
 			global_holiday_type = holiday_type_similarity * int(self.Holiday_Type_Weight_cb.get())
 			global_price = price_similariy * int(self.Price_Weight_cb.get())
 			global_number_of_persons = number_of_persons_similarity *\
@@ -206,75 +201,48 @@ class Application(Frame):
 								region_similarity,  transportation_similarity,
 								duration_similarity, season_similarity, 
 								accommodation_similarity]])
-		print ("type of hotel")
-		print(type(cases[0].hotel))
-		
+
+		#Rank and RETRIEVE the 10 most similar cases
 		index_list.sort(key= lambda x: x[1], reverse = True)
-		k = 200
+		k = 10
 		for i in range(k):
 			cases_index = index_list[i][0]
 			case = cases[cases_index]
-			output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
-						"Holiday Type: " + case.holiday_type + "\n" + \
-						"Price: " + str(case.price) + "\n" + \
-						"Number of Persons: " + str(case.number_of_persons) + "\n" + \
-						"Region: " + case.region + "\n" + \
-						"Transportation: " + case.transportation + "\n" + \
-						"Duration: " + str(case.duration) + "\n" + \
-						"Season: " + case.season + "\n" + \
-						"Accommodation: "+ case.accommodation + "\n" + \
-						"Hotel: " + case.hotel + "\n \n" 	
 			#output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
-						#"Holiday Type: " + case.holiday_type + "\n" + \#str(index_list[i][2][0]) + "\n" +\
-						#"Price: " + str(case.price) + "\n" + #str(index_list[i][2][1]) + "\n" + \
-						#"Number of Persons: " + str(case.number_of_persons) + "\n" + #str(index_list[i][2][2]) + "\n" + \
-						#"Region: " + case.region + "\n" + #str(index_list[i][2][3]) + "\n" + \
-						#"Transportation: " + case.transportation + "\n" + #str(index_list[i][2][4]) + "\n" + \
-						#"Duration: " + str(case.duration) + "\n" + #str(index_list[i][2][5]) + "\n" + \
-						#"Season: " + case.season + "\n" + #str(index_list[i][2][6]) + "\n" + \
-						#"Accommodation: "+ case.accommodation + "\n" + # str(index_list[i][2][7]) +"\n" +\
-						#"Hotel: " + case.hotel + "\n \n" 	
-		
-		#for x in cases:
-		#	holiday_type_similarity = Similarity.holiday_type(query_case, x)
-		#	price_similariy = Similarity.price(query_case, x)
-		#	number_of_persons_similarity = Similarity.number_of_persons(query_case, x)
-		#	region_similarity = Similarity.region(query_case, x)
-		#	transportation_similarity = Similarity.transportation(query_case, x)
-		#	duration_similarity = Similarity.duration(query_case, x)
-		#	season_similarity = Similarity.season(query_case, x)
-		#	accommodation_similarity = Similarity.accommodation(query_case, x)
-			
-			
-			#output += "Similarity scores ****Test**** \n" + str(holiday_type_similarity) +"\n"+ \
-			#	 str(price_similariy) + "\n" + str(number_of_persons_similarity) + "\n" + \
-			#	 str(region_similarity) + "\n" + str(transportation_similarity) + "\n" + \
-			#	 str(duration_similarity) + "\n" + str(season_similarity) + "\n" + \
-			#	 str(accommodation_similarity) +"\n" 
-					
-			#	>>> mylist = [["quux", 1, "a"], ["bar", 0, "b"]]
-			#	>>> mylist.sort(key=lambda x: x[1])
-			#	>>> print mylist
-			#gives:
-			#[['bar', 0, 'b'], ['quux', 1, 'a']]
-		x = 'a string'
-		print("this is x ") 
-		print(type(x))
-		print("this is combobox variable")
-		print(type(str(self.Holiday_Type_cb.get())))				
+			#			"Holiday Type: " + case.holiday_type + "\n" + \
+			#			"Price: " + str(case.price) + "\n" + \
+			#			"Number of Persons: " + str(case.number_of_persons) + "\n" + \
+			#			"Region: " + case.region + "\n" + \
+			#			"Transportation: " + case.transportation + "\n" + \
+			#			"Duration: " + str(case.duration) + "\n" + \
+			#			"Season: " + case.season + "\n" + \
+			#			"Accommodation: "+ case.accommodation + "\n" + \
+			#			"Hotel: " + case.hotel + "\n \n" 	
+			#Out put for displaying individual local similarity scores
+			output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
+						"Holiday Type: " + case.holiday_type + "\n" + str(index_list[i][2][0]) + "\n" +\
+						"Price: " + str(case.price) + "\n" + str(index_list[i][2][1]) + "\n" + \
+						"Number of Persons: " + str(case.number_of_persons) + "\n" + str(index_list[i][2][2]) + "\n" + \
+						"Region: " + case.region + "\n" + str(index_list[i][2][3]) + "\n" + \
+						"Transportation: " + case.transportation + "\n" + str(index_list[i][2][4]) + "\n" + \
+						"Duration: " + str(case.duration) + "\n" + str(index_list[i][2][5]) + "\n" + \
+						"Season: " + case.season + "\n" + str(index_list[i][2][6]) + "\n" + \
+						"Accommodation: "+ case.accommodation + "\n" +  str(index_list[i][2][7]) +"\n" +\
+						"Hotel: " + case.hotel + "\n \n" 	
+		#Display output			
 		self.text.delete(0.0, END)
 		self.text.insert(0.0, output)
 		
-#read in cases from case base
+#Read in cases from case base
 cases = []
 def read_in_cases():
 	#workbook = xlrd.open_workbook('Case/Regions_Test.xlsx')
 	#workbook = xlrd.open_workbook('CASE/Test_Workbook.xlsx')
 	workbook = xlrd.open_workbook('CASE/TRAVEL.XLS')
-	print(workbook.nsheets)
+	#print(workbook.nsheets)
 	sheet = workbook.sheet_by_index(0)
-	print(sheet.ncols)
-	print(sheet.nrows)
+	#print(sheet.ncols)
+	#print(sheet.nrows)
 	for row_index in range(0, sheet.nrows):
 		if sheet.cell(row_index, 1).value == 'case':
 			case = sheet.cell(row_index, 2).value
@@ -291,7 +259,7 @@ def read_in_cases():
 			cases.append(Case(case, journey_code, holiday_type, price, 
 							number_of_persons, region, transportation, 
 							duration, season, accommodation, hotel))
-	print(len(cases))
+	#print(len(cases))
 	return cases
 			
 		
@@ -316,47 +284,46 @@ if __name__ == '__main__':
 	number_of_persons_list = []
 	duration_list = []
 	
-	#parse cases to see the range of fields
-	for case in cases:
+	#Process cases to see the range of fields
+	#for case in cases:
 		#categorical variables
-		if case.holiday_type not in holiday_type_list:
-			holiday_type_list.append(case.holiday_type)
-		if case.region not in region_list:
-			region_list.append(case.region)
-		if case.transportation not in transportation_list:
-			transportation_list.append(case.transportation)
-		if case.season not in season_list:
-			season_list.append(case.season)
-		if case.accommodation not in accommodation_list:
-			accommodation_list.append(case.accommodation)
-		if case.hotel not in hotel_list:
-			hotel_list.append(case.hotel)
+		#if case.holiday_type not in holiday_type_list:
+		#	holiday_type_list.append(case.holiday_type)
+		#if case.region not in region_list:
+		#	region_list.append(case.region)
+		#if case.transportation not in transportation_list:
+		#	transportation_list.append(case.transportation)
+		#if case.season not in season_list:
+		#	season_list.append(case.season)
+		#if case.accommodation not in accommodation_list:
+		#	accommodation_list.append(case.accommodation)
+		#if case.hotel not in hotel_list:
+		#	hotel_list.append(case.hotel)
 		#numeric variables
-		if case.price not in price_list:
-			price_list.append(case.price)
-		if case.number_of_persons not in number_of_persons_list:
-			number_of_persons_list.append(case.number_of_persons)
-		if case.duration not in duration_list:
-			duration_list.append(case.duration)
-		
-	
-	print('There are ' + str(len(holiday_type_list)) + ' types of holidays: ',
-		holiday_type_list)
-	print('There are ' + str(len(price_list)) + ' different prices: ', 
-		sorted(price_list))
-	print('There are ' + str(len(number_of_persons_list)) + ' different number of people: ',
-		sorted(number_of_persons_list))
-	print('There are ' + str(len(region_list)) + ' different regions: ',
-		sorted(region_list))
-	print('There are ' + str(len(transportation_list)) + 'different transports: ',
-		transportation_list)
-	print('There are ' + str(len(duration_list)) + 'different durations: ',
-		sorted(duration_list))
-	print('There are ' + str(len(season_list)) + 'different seasons: ',
-		season_list)
-	print('There are ' + str(len(accommodation_list)) + 'different accommodations: ',
-		accommodation_list)
-	print('There are ' + str(len(hotel_list)) + 'different hotels: ', hotel_list)
+		#if case.price not in price_list:
+		#	price_list.append(case.price)
+		#if case.number_of_persons not in number_of_persons_list:
+		#	number_of_persons_list.append(case.number_of_persons)
+		#if case.duration not in duration_list:
+		#	duration_list.append(case.duration)
+	#Output processed variables to show variables ranges	
+	#print('There are ' + str(len(holiday_type_list)) + ' types of holidays: ',
+	#	holiday_type_list)
+	#print('There are ' + str(len(price_list)) + ' different prices: ', 
+	#	sorted(price_list))
+	#print('There are ' + str(len(number_of_persons_list)) + ' different number of people: ',
+	#	sorted(number_of_persons_list))
+	#print('There are ' + str(len(region_list)) + ' different regions: ',
+	#	sorted(region_list))
+	#print('There are ' + str(len(transportation_list)) + 'different transports: ',
+	#	transportation_list)
+	#print('There are ' + str(len(duration_list)) + 'different durations: ',
+	#	sorted(duration_list))
+	#print('There are ' + str(len(season_list)) + 'different seasons: ',
+	#	season_list)
+	#print('There are ' + str(len(accommodation_list)) + 'different accommodations: ',
+	#	accommodation_list)
+	#print('There are ' + str(len(hotel_list)) + 'different hotels: ', hotel_list)
 
 				
 				

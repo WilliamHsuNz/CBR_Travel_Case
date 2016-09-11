@@ -1,8 +1,10 @@
 import math
 """
-Python Similarity methods
+CBR for the Travel domain
+Similarity functions
 Author: William Hsu
-21/August/2016
+Date: 11/September/2016
+Local similarity functions for CBR_Travel.py
 """
 
 def holiday_type(query_case, source_case):
@@ -106,7 +108,7 @@ def region(query_case, source_case):
 		Nations_List.append(["Cairo"])#Egypt
 		Nations_List.append([])#England added London
 		Nations_List.append(["Brittany", "Corsica", "CotedAzur", "Normandy", "Paris"])#France
-		Nations_List.append([ "Bavaria", "BlackForest", "ErzGebirge", "Harz", "Thuringia"])#Germany
+		Nations_List.append(["Allgaeu", "Bavaria", "BlackForest", "ErzGebirge", "Harz", "Thuringia"])#Germany
 		Nations_List.append(["Attica", "Chalkidiki", "Corfu", "Crete", "Rhodes"])#Greece
 		Nations_List.append([])#Holland
 		Nations_List.append(["Balaton"])#Hungaria
@@ -126,41 +128,31 @@ def region(query_case, source_case):
 		Nations_List.append(["TurkishAegeanSea", "TurkishRiviera"])#Turkey
 		Nations_List.append(["England", "Wales", "Scotland", "Ireland", "London"])#UnitedKingdom
 		Nations_List.append([])#Wales
-		#check "containing" relationship (regions that are contained by nations) 
-		if query_case_region in Nations:# fix bug when using England
+		#Check "containing" relationship (regions that are contained by nations) 
+		if query_case_region in Nations:
 			index = Nations.index(query_case_region)
 			if source_case_region in Nations_List[index]:
 				similarity = 1.0
 				return similarity
-		#handle case where the holiday type is Language
-		if query_case.holiday_type == "Language": #changed from elif to if 
+		#Handle case where the holiday type is Language
+		if query_case.holiday_type == "Language": 
 			similarity = 0.0
 			for i in range(len(Nations_List)):
 				if query_case_region in Nations_List[i]:
-					#check if query case and source case belong in the same country
+					#Check if query case and source case belong in the same country
 					if source_case_region in Nations_List[i]:
 						similarity = 1.0
 						return similarity
-					#check if source case is a nation that the query case is in
+					#Check if source case is a nation that the query case is in
 					if source_case_region == Nations[i]:
 						similarity = 0.8	
 						return similarity
 					else:
 						similarity = 0.0
-						return similarity
-			#return similarity		
+						return similarity		
 		else: 
 ###############################################################################	
-			#similarity_1 = 0.0
-			#handle if source contains query
-			#if source_case_region in Nations:
-			#	index = Nations.index(source_case_region)
-			#	if query_case_region in Nations_List[index]:
-			#		print("Nation is ")
-			#		print(Nations_List[index])
-			#		similarity_1 = 0.7
-			#		print(similarity_1)
-			#check "has" relationship (regions that shares similar features)   
+			#Check "has" relationship (regions that shares similar features)   
 			Island = ["Bornholm", "Corfu", "Corsica", "Crete", "Cyprus", "Fano",
 					  "Fuerteventura", "GranCanaria", "Ibiza",
 					  "Lanzarote", "Lolland", "Mallorca", "Madeira", "Malta", "Rhodes", 
@@ -174,34 +166,22 @@ def region(query_case, source_case):
 			City1 = ["Cairo", "Egypt"]
 			City2 = ["London", "England"]
 			City3 = ["Paris", "France"]
-			#Country = ["Austria", "Belgium","Bulgaria", "Czechia", "Denmark", 
-			#		   "France", "Germany", "Greece", "Holland", "Hungaria", 
-			#		   "Ireland", "Italy", "Morocco", "Poland", "Portugal", 
-			#		   "Slowakei", "Spain", "Sweden", "Switzerland","Scotland", 
-			#		   "Turkey", "UnitedKingdom", "Wales"]
 			Coast = ["Algarve", "Attica", 
 					 "Brittany", "Bulgaria", "Chalkidiki", "CostaBlanca", 
 					 "CostaBrava", "CotedAzur", "Egypt",   
 					 "Normandy","Lanzarote","Riviera", 
 					 "Tunisia", "TurkishRiviera", "Riviera"]
-			#Waters = ["Cairo", "Corfu", "Denmark", "Egypt", "France", "Germanyas", 
-			#		  "Greece", "Holland", "Ireland", "Italy", "Madeira", "Mallorca", 
-			#		  "Malta", "Morocco", "Poland", "Portugal", "Riviera", 
-			#		  "Salzkammergut", "Spain", "Sweden","Turkey", "TurkishRiveria", 
-			#		  "UnitedKingdom", "Wales"]
 			Lake = ["Balaton", "BlackForest", "Carinthia",
 				    "HighTatra", "LakeGarda", "LowerAustria", 
 					"Salzkammergut", "Styria"]
-			#Sea = ["AdriaticSea", "Atlantic", "BalticSea", "MediterraneanSea", "NorthSea", 
-			#	   "TurkishAegeanSea"]
 			AdriaticSea = ["Italy", "AdriaticSea"]
 			Atlantic = ["Spain", "Morocco", "Portugal", "Algarve", "Madeira",
 						"France", "Fuerteventura", "Lanzarote", 
 				 		"GranCanaria", "Teneriffe", "Brittany", "Atlantic" ]
 			BalticSea = ["Bornholm", "Poland", "Sweden", "Lolland", "Germany", "Denmark", "BalticSea"]
-			MediterraneanSea = ["Corfu", "Corsica", "CostaBlanca", "CostaBrava", "CotedAzur", "Crete", "Cyprus", "Ibiza",
- 								"Tunisia", "Mallorca", "Malta", "TurkishRiviera", "MediterraneanSea",
-								"Riviera"]
+			MediterraneanSea = ["Corfu", "Corsica", "CostaBlanca", "CostaBrava", "CotedAzur", "Crete", 
+								"Cyprus", "Ibiza", "Tunisia", "Mallorca", "Malta", "TurkishRiviera", 
+								"MediterraneanSea","Riviera"]
 			NorthSea = ["Fano", "UnitedKingdom", "Belgium", "Holland", "Germany", "Denmark", "NorthSea"]
 			TurkishAegeanSea = ["Attica", "Chalkidiki", "Rhodes", "Greece", "Turkey", "TurkishAegeanSea"]
 			UnitedKingdom = ["Scotland", "Wales", "Ireland", "England"]
@@ -211,11 +191,8 @@ def region(query_case, source_case):
 			Category_List.append(City1)
 			Category_List.append(City2)
 			Category_List.append(City3)
-			#Category_List.append(Country)
 			Category_List.append(Coast)
-			#Category_List.append(Waters)
 			Category_List.append(Lake)
-			#Category_List.append(Sea)
 			Category_List.append(AdriaticSea)
 			Category_List.append(Atlantic)
 			Category_List.append(BalticSea)
@@ -223,7 +200,7 @@ def region(query_case, source_case):
 			Category_List.append(NorthSea)
 			Category_List.append(TurkishAegeanSea)
 			Category_List.append(UnitedKingdom)
-			#form step function based on how many categories the query_case_region associates
+			#Form step function based on how many categories the query_case_region has
 			number_of_category_count = 0
 			shared_category_count = 0
 			for x in range(len(Category_List)):
@@ -234,12 +211,6 @@ def region(query_case, source_case):
 			number_of_steps = number_of_category_count + 1
 			similarity_value_for_each_step = 1.0/number_of_steps
 			similarity = similarity_value_for_each_step * shared_category_count
-			#print("similarity 1 and 2")
-			#print(similarity_1)
-			#print(similarity_2)
-			#similarity = max(similarity_1, similarity_2)
-			#print("similarity")
-			#print(similarity)
 		return similarity 
 ###############################################################################			
 
@@ -247,27 +218,6 @@ def transportation(query_case, source_case):
 	transportation_dict = {"Arbitrary": 0, "Car": 1, "Coach": 2, "Train": 3, "Plane": 4}
 	query_case_transportation = transportation_dict[query_case.transportation]
 	source_case_transportation = transportation_dict[source_case.transportation]
-	#handle cases where transport is restricted to plane
-	#islands_accessible_only_by_plane = ["Attica", "Corfu", "Corsica", "Crete", 
-	#									"Cyprus", "Fuerteventura", "GranCanaria", 
-	#									"Ibiza", "Ireland", "Lanzarote", "Lolland", 
-	#									"Mallorca", "Malta", "Rhodes", "Teneriffe"]
-	#if query_case.region in islands_accessible_only_by_plane:
-	#	transportation_matrix = [[0.0, 0.0, 0.0, 0.0, 1.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 1.0]]
-	#	similarity = transportation_matrix[query_case_transportation][source_case_transportation]
-	#elif query_case.region == "Bornholm":
-	#	transportation_matrix = [[0.0, 0.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 1.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.0],
-	#							 [0.0, 0.0, 0.0, 0.0, 0.0]]
-	#	similarity = transportation_matrix[query_case_transportation][source_case_transportation]
-	#general case
-	#else:
 	transportation_matrix = [[1.0, 1.0, 1.0, 1.0, 1.0],
 							 [0.0, 1.0, 0.7, 0.5, 0.2],
 							 [0.0, 0.3, 1.0, 0.7, 0.5],
@@ -305,18 +255,8 @@ def duration(query_case, source_case):  #range between 1 and 56
 			similarity = 1.0 - (difference * step_size)
 		else:
 			similarity = 0.0
-		#accept_range = math.ceil(query_case_duration *0.1)
-		#bound = accept_range + 1
-		#if source_case_duration > query_case_duration - bound and \
-		#	source_case_duration < query_case_duration + bound:
-		#	step_size = 1.0 /bound
-		#	difference = math.fabs(query_case_duration - source_case_duration)
-		#	similarity  = 1.0 - (difference * step_size)
-		#else:
-		#	similarity = 0.0
 	return similarity
-
-#reconsider this method... use matrix		
+	
 def season(query_case, source_case):
 	if query_case.season == "Arbitrary":
 		similarity = 1.0
