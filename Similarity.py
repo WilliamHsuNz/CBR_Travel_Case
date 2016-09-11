@@ -278,8 +278,19 @@ def season(query_case, source_case):
 		return similarity
 
 def accommodation(query_case, source_case):
+	#accommodation_type_dict = {"Arbitrary": 0, "HolidayFlat": 1, "OneStar": 2, "TwoStars": 3,
+	 #							"ThreeStars": 4, "FourStars": 5, "FiveStars": 6}
+	#query_accommodation_type = accommodation_type_dict[query_case.accommodation]
+	#source_accommodation_type = accommodation_type_dict[source_case.accommodation]
+	#accommodation_type_matrix = [[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+	#							 [0.6, 1.0, 0.6, 0.2, 0.0, 0.0, 0.0],
+	#							 [0.2, 0.6, 1.0, 0.6, 0.2, 0.0, 0.0],
+	#							 [0.0, 0.2, 0.6, 1.0, 0.6, 0.2, 0.0],
+	#							 [0.0, 0.0, 0.2, 0.6, 1.0, 0.6, 0.2],
+	#							 [0.0, 0.0, 0.0, 0.2, 0.6, 1.0, 0.6],
+	#							 [0.0, 0.0, 0.0, 0.0, 0.2, 0.6, 1.0]]
 	accommodation_type_dict = {"Arbitrary": 0, "HolidayFlat": 0, "OneStar": 1, "TwoStars": 2,
-	 							"ThreeStars": 3, "FourStars": 4, "FiveStars": 5}
+								"ThreeStars": 3, "FourStars": 4, "FiveStars": 5}
 	query_accommodation_type = accommodation_type_dict[query_case.accommodation]
 	source_accommodation_type = accommodation_type_dict[source_case.accommodation]
 	accommodation_type_matrix = [[1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
@@ -288,5 +299,6 @@ def accommodation(query_case, source_case):
 								 [0.1, 0.4, 0.7, 1.0, 1.0, 1.0],
 								 [0.0, 0.1, 0.4, 0.7, 1.0, 1.0],
 								 [0.0, 0.0, 0.1, 0.4, 0.7, 1.0]]
+	#similarity = accommodation_type_matrix[query_accommodation_type][source_accommodation_type]
 	similarity = accommodation_type_matrix[query_accommodation_type][source_accommodation_type]
 	return similarity
