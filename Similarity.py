@@ -183,7 +183,7 @@ def region(query_case, source_case):
 					 "Brittany", "Bulgaria", "Chalkidiki", "CostaBlanca", 
 					 "CostaBrava", "CotedAzur", "Egypt",   
 					 "Normandy","Lanzarote","Riviera", 
-					 "Tunisia", "TurkishRiveria", "Riviera"]
+					 "Tunisia", "TurkishRiviera", "Riviera"]
 			#Waters = ["Cairo", "Corfu", "Denmark", "Egypt", "France", "Germanyas", 
 			#		  "Greece", "Holland", "Ireland", "Italy", "Madeira", "Mallorca", 
 			#		  "Malta", "Morocco", "Poland", "Portugal", "Riviera", 

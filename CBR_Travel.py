@@ -7,14 +7,21 @@ import Similarity
 """
 CBR Travel Case
 Author: William Hsu
-19/August/2016
+Date:  11/September/2016
+This program uses the k-NN algorithm to retrieve cases based on user defined 
+problem description from the Travel case base.
+The system allows users to define attribute values as well as weightings for 
+individual attributes.   
+To Run the Program use the commandline command:
+
+python3 CBR_Travel.py
+
 """
 
 
 class Application(Frame):
-	"""A Gui application with three buttons"""
+	#Set up application user interface
 	def __init__(self, master):
-		"""Initialize the Frame"""
 		Frame.__init__(self, master)
 		self.grid()
 		self.create_widgets()
@@ -23,7 +30,8 @@ class Application(Frame):
 		self.Title = Label(self, text = "CBR for Travel Case Base", font =('Helvetica', 24))
 		self.Title.grid(row = 0, column = 0, sticky = W)
 		
-		self.Instruction_Label = Label(self, text= "some instruction on how to use the application")
+		self.Instruction_Label = Label(self, text= "Find 10 holidays that best match your travel plans by filling in the fields below.  You can give greater or less importance to aspects by changing their weighting.", 
+		wraplengt = 300, justify = LEFT)
 		self.Instruction_Label.grid(row = 1, column = 0, sticky = E)
 		self.Weights_Label = Label(self, text = "weighting").grid(row = 2, column = 2, sticky = W)
 		
@@ -100,16 +108,6 @@ class Application(Frame):
 		self.Accommodation_Type_cb.grid(row = 10, column = 1, sticky = W)
 		self.Accommodation_Type_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
 		self.Accommodation_Type_Weight_cb.grid(row = 10, column = 2, sticky = W)
-	
-		#self.Hotel = Label(self, text ="Hotel").grid(row = 11, column = 0, sticky = E)
-		#self.Hotel_Entry = Entry(self, bd= 2)
-		#self.Hotel_Entry.grid(row = 11 , column = 1, sticky = W)
-		#self.Hotel_Weight_cb = ttk.Combobox(self, values = Weights, width = 3, state= "readonly")
-		#self.Hotel_Weight_cb.grid(row = 11, column = 2, sticky = W)
-		
-		#self.k = Label(self, text ="k").grid(row = 12, column = 0, sticky = E)
-		#self.k_Entry = Entry(self, bd = 2)
-		#self.k_Entry.grid(row = 12, column = 1, sticky = W)
 	
 		self.submit_button = Button(self, text = "Submit", command = self.reveal).grid(row = 13, column = 2, sticky = E)
 		self.text = Text(self, width = 35, height = 11, wrap = WORD)
@@ -216,17 +214,27 @@ class Application(Frame):
 		for i in range(k):
 			cases_index = index_list[i][0]
 			case = cases[cases_index]
-			output += "Similarity score: " + str(index_list[i][1]) + "\n" + \
-						"Holiday Type: " + case.holiday_type + str(index_list[i][2][0]) + "\n" +\
-						"Price: " + str(case.price) + str(index_list[i][2][1]) + "\n" + \
-						"Number of Persons: " + str(case.number_of_persons) + str(index_list[i][2][2]) + "\n" + \
-						"Region: " + case.region + str(index_list[i][2][3]) + "\n" + \
-						"Transportation: " + case.transportation + str(index_list[i][2][4]) + "\n" + \
-						"Duration: " + str(case.duration) + str(index_list[i][2][5]) + "\n" + \
-						"Season: " + case.season + str(index_list[i][2][6]) + "\n" + \
-						"Accommodation: "+ case.accommodation + str(index_list[i][2][7]) +"\n" +\
+			output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
+						"Holiday Type: " + case.holiday_type + "\n" + \
+						"Price: " + str(case.price) + "\n" + \
+						"Number of Persons: " + str(case.number_of_persons) + "\n" + \
+						"Region: " + case.region + "\n" + \
+						"Transportation: " + case.transportation + "\n" + \
+						"Duration: " + str(case.duration) + "\n" + \
+						"Season: " + case.season + "\n" + \
+						"Accommodation: "+ case.accommodation + "\n" + \
 						"Hotel: " + case.hotel + "\n \n" 	
-			
+			#output += "Similarity score: " + str(round(index_list[i][1], 3)) + "\n" + \
+						#"Holiday Type: " + case.holiday_type + "\n" + \#str(index_list[i][2][0]) + "\n" +\
+						#"Price: " + str(case.price) + "\n" + #str(index_list[i][2][1]) + "\n" + \
+						#"Number of Persons: " + str(case.number_of_persons) + "\n" + #str(index_list[i][2][2]) + "\n" + \
+						#"Region: " + case.region + "\n" + #str(index_list[i][2][3]) + "\n" + \
+						#"Transportation: " + case.transportation + "\n" + #str(index_list[i][2][4]) + "\n" + \
+						#"Duration: " + str(case.duration) + "\n" + #str(index_list[i][2][5]) + "\n" + \
+						#"Season: " + case.season + "\n" + #str(index_list[i][2][6]) + "\n" + \
+						#"Accommodation: "+ case.accommodation + "\n" + # str(index_list[i][2][7]) +"\n" +\
+						#"Hotel: " + case.hotel + "\n \n" 	
+		
 		#for x in cases:
 		#	holiday_type_similarity = Similarity.holiday_type(query_case, x)
 		#	price_similariy = Similarity.price(query_case, x)
